@@ -4,8 +4,8 @@
       <nav-menu/>
     </el-header>
     <el-main>
-      <el-row :gutter="20">
-        <el-col :span="22" :offset="1">
+      <el-row :gutter="0">
+        <el-col :span="24">
           <slot name="main"/>
         </el-col>
       </el-row>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import NavMenu from "../assets/NavMenu";
+  import NavMenu from "./NavMenu";
   import MyFooter from "../components/myFooter"
 
   export default {

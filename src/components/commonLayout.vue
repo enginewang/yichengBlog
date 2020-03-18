@@ -3,12 +3,12 @@
     <el-header>
       <nav-menu/>
     </el-header>
-    <el-main style="margin-top: 2em;">
-      <el-row :gutter="25">
-        <el-col :span="15" :offset="2">
+    <el-main style="margin-top: 2em;margin-bottom: 2em;">
+      <el-row :gutter="25" type="flex" justify="center">
+        <el-col :xs="24" :sm="17" :md="17">
           <slot name="main"/>
         </el-col>
-        <el-col :span="5">
+        <el-col :xs="0" :sm="5" :md="5">
           <slot name="search"/>
           <side-notice/>
         </el-col>
@@ -19,13 +19,19 @@
 </template>
 
 <script>
-  import NavMenu from "../assets/NavMenu";
+  import NavMenu from "./NavMenu";
   import MyFooter from "../components/myFooter"
   import SideNotice from "../components/sideNotice"
+  import 'element-ui/lib/theme-chalk/display.css'
 
   export default {
     name: "commonLayout",
     components: {NavMenu, MyFooter, SideNotice},
+    data() {
+      return {
+        screenWidth: document.body.clientWidth,
+      }
+    },
   }
 </script>
 

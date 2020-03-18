@@ -1,60 +1,67 @@
 <template>
   <div class="login">
+
+
     <img class="bg" alt="Vue logo" src="../../assets/miku.png">
-    <el-card class="box-card" id="loginCard">
-      <h3>用户注册</h3>
-      <el-form :model="userRegisterForm" status-icon label-width="100px" :rules="rules">
+    <el-row :gutter="10" type="flex" justify="center" style="margin-top: 10%;">
+      <el-col :xs="23" :sm="16" :md="12" :lg="8" :xl="6">
+        <el-card class="box-card" id="loginCard">
+          <h3>用户注册</h3>
+          <el-form :model="userRegisterForm" status-icon label-width="100px" :rules="rules">
 
-        <el-form-item label="邮箱" prop="email" style="width: 86%">
-          <el-input v-model="userRegisterForm.email"></el-input>
-        </el-form-item>
+            <el-form-item label="邮箱" prop="email" style="width: 86%">
+              <el-input v-model="userRegisterForm.email"></el-input>
+            </el-form-item>
 
-        <el-form-item label="用户名" prop="username" style="width: 86%">
-          <el-input v-model="userRegisterForm.username"></el-input>
-        </el-form-item>
+            <el-form-item label="用户名" prop="username" style="width: 86%">
+              <el-input v-model="userRegisterForm.username"></el-input>
+            </el-form-item>
 
-        <el-form-item label="密码" prop="password" style="width: 86%">
-          <el-input type="password" v-model="userRegisterForm.password" autocomplete="off"></el-input>
-        </el-form-item>
+            <el-form-item label="密码" prop="password" style="width: 86%">
+              <el-input type="password" v-model="userRegisterForm.password" autocomplete="off"></el-input>
+            </el-form-item>
 
-        <el-form-item label="确认密码" prop="re_password" style="width: 86%">
-          <el-input type="password" v-model="userRegisterForm.re_password" autocomplete="off"></el-input>
-        </el-form-item>
+            <el-form-item label="确认密码" prop="re_password" style="width: 86%">
+              <el-input type="password" v-model="userRegisterForm.re_password" autocomplete="off"></el-input>
+            </el-form-item>
 
-        <el-form-item label="初始头像" style="width: 86%">
-          <el-button @click="showAvatarLibrary" style="float: left;margin-top: .5em;" size="mini">
-            选择头像
-          </el-button>
-          <el-image class="avatar" :src="userAvatar" :preview-src-list=imgToImgList(userAvatar)
-                    style="float: left;margin-left:.4em;width: 3em;height: 3em">
-            <div slot="error" class="image-slot">
-              <i class="el-icon-picture-outline"></i>
+            <el-form-item label="初始头像" style="width: 86%">
+              <el-button @click="showAvatarLibrary" style="float: left;margin-top: .5em;" size="mini">
+                选择头像
+              </el-button>
+              <el-image class="avatar" :src="userAvatar" :preview-src-list=imgToImgList(userAvatar)
+                        style="float: left;margin-left:.4em;width: 3em;height: 3em">
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline"></i>
+                </div>
+              </el-image>
+              <label style="font-size: small; color: #484848; float: left; margin-left: 1em;" v-show="hasChooseAvatar"> ←
+                点击可放大</label>
+            </el-form-item>
+
+
+            <div title="初始头像库" v-show="avatarLibraryShow" style="margin-left: .8em;">
+              <label v-for="avatar in defaultAvatarList" :key="avatar" style="margin-right: 0em">
+                <el-image :src="avatar" style="width: 3em;height: 3em;margin-right: .7em;"
+                          @click="chooseAvatar(avatar)"></el-image>
+              </label>
             </div>
-          </el-image>
-          <label style="font-size: small; color: #484848; float: left; margin-left: 1em;" v-show="hasChooseAvatar"> ←
-            点击可放大</label>
-        </el-form-item>
 
+            <div style="margin-bottom: 1em;">
+              <el-button type="text" @click="goToLoginPage">已有账号？直接登陆</el-button>
+            </div>
 
-        <div title="初始头像库" v-show="avatarLibraryShow" style="margin-left: .8em;">
-          <label v-for="avatar in defaultAvatarList" :key="avatar" style="margin-right: 0em">
-            <el-image :src="avatar" style="width: 3em;height: 3em;margin-right: .7em;"
-                      @click="chooseAvatar(avatar)"></el-image>
-          </label>
-        </div>
+            <el-row :gutter=24>
+              <el-button type="primary" @click="submituserRegisterForm()" style="margin-right: 1em">提交</el-button>
+              <el-button @click="cancel()" style="margin-left: 1em">取消</el-button>
+            </el-row>
 
-        <div style="margin-bottom: 1em;">
-          <el-button type="text" @click="goToLoginPage">已有账号？直接登陆</el-button>
-        </div>
+          </el-form>
 
-        <el-row :gutter=24>
-          <el-button type="primary" @click="submituserRegisterForm()" style="margin-right: 1em">提交</el-button>
-          <el-button @click="cancel()" style="margin-left: 1em">取消</el-button>
-        </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
 
-      </el-form>
-
-    </el-card>
   </div>
 </template>
 
@@ -271,15 +278,9 @@
   }
 
   #loginCard {
-    width: 40%;
     color: #232323;
     z-index: 100;
-    position: absolute;
     text-align: center;
-    top: 8em;
-    left: 0;
-    right: 0;
-    margin: auto;
   }
 
   .avatar {

@@ -82,7 +82,7 @@
                 <div class="comment-content" style="float: left;text-align: left; width: 100%">
                   <MarkdownDisplay :markdown="returnCommentById(reply_id).content"></MarkdownDisplay>
                 </div>
-                <span style="float: left;color: #5a5e66; font-size: small"> 评论于： {{timeStampToString(returnCommentById(reply_id).time)}}</span>
+                <span style="float: left;color: #5a5e66; font-size: small"> 评论于： {{timeStampToString(returnCommentById(reply_id).time, "second")}}</span>
               </el-col>
               <el-button type="text" v-if="isMyComment(returnCommentById(reply_id))"
                          @click="deleteThisComment(reply_id)"

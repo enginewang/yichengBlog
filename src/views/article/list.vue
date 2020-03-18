@@ -32,36 +32,41 @@
           <el-card id="articleCard" v-for="(article, id) in articleList" v-bind:key="id" class="box-card" shadow="hover"
                    style="padding-left: 0; padding-right: 0;min-height: 11em;" v-show="judgeShow(article)">
             <el-row :gutter="10">
-              <el-col :span="8">
+              <el-col :span="9" :xs="0">
                 <el-image
                         style="padding-left: 0;"
                         :src="article.cover"
-                        :preview-src-list="imgToImgList(article.cover)">
+                        :preview-src-list="imgToImgList(article.cover)"
+                        :fit="fill">
                 </el-image>
               </el-col>
-              <el-col :span="14" :offset="1">
+              <el-col :span="14" :offset="1" :xs="23">
                 <div class="title">
-                  <el-row :gutter="0">
-                    <el-col :span="12" :offset=3>
+                  <el-row :gutter="0" type="flex" justify="center">
+                    <el-col>
                       <el-button @click="seeDetail(article._id)" type="text"
                                  style="color: black; font-family: FZZhengHeiS-M-GB; font-size: large">
                         {{ article.title }}
                       </el-button>
                     </el-col>
-                    <el-col :span="9" style="margin-top: .5em;">
-                      <el-tag v-for="(tag, id) in tagStringToList(article.tags)" :key="id" size="mini"
-                              style="margin-left: .5em">
-                        {{tag }}
-                      </el-tag>
-                      <el-tag size="mini" type="success" style="margin-left: 1em">
-                        {{ article.kind }}
-                      </el-tag>
-                    </el-col>
                   </el-row>
                 </div>
+                <el-row>
+                  <el-col style="margin-left: 0">
+                    <label style="font-weight: bold">发布时间： </label>{{ timeStampToString(article.pubTime) }}
+                  </el-col>
+                   <el-col>
+                     <el-tag v-for="(tag, id) in tagStringToList(article.tags)" :key="id" size="mini"
+                             style="margin-left: .5em">
+                       {{tag }}
+                     </el-tag>
+                     <el-tag size="mini" type="success" style="margin-left: 1em">
+                       {{ article.kind }}
+                     </el-tag>
+                   </el-col>
+                </el-row>
                 <div class="desc" style="text-align: left; margin-top: .3rem;" @click="seeDetail(article._id)">
-                  <label style="font-weight: bold">发布时间：</label>{{ timeStampToString(article.pubTime) }} <br><label
-                        style="font-weight: bold">概要：</label>{{ descSimple(article.desc) }}
+                  <label style="font-weight: bold">概要：</label>{{ descSimple(article.desc) }}
                 </div>
               </el-col>
             </el-row>
@@ -252,7 +257,6 @@
 
   .el-card__body {
     padding: 15px;
-    padding-bottom: 2em;
   }
 
   .el-card__header {

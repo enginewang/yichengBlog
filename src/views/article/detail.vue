@@ -1,68 +1,76 @@
 <template>
   <div>
     <img class="detail-bg" src="@/assets/bg.jpg">
-    <common-layout v-slot:main >
+    <basic-layout v-slot:main>
       <transition name="fade">
         <loading v-if="isLoading"></loading>
       </transition>
-      <el-card class="box-card" style="left: 5em;right: 5em;background: rgba(255,255,255,0.7)">
-        <div slot="header" class="clearfix">
-          <el-row>
-            <el-button class="backBtn" @click="prePage" style="position: absolute;left: 1em;"> 返回</el-button>
-            <h2>{{ article.title }}</h2>
-          </el-row>
-          <el-row :gutter="12">
-            <el-col :span="6" :offset="9">
-              <label style="margin-top:0.1em;font-weight: lighter;font-size: medium">发布于
-                {{  timeStampToString(article.pubTime, "day") }}</label>
-            </el-col>
-            <el-col :span="6" :offset="3">
-              <el-tag size="mini" type="success">
-                {{ article.kind }}
-              </el-tag>
-              <el-tag v-for="tag in tags" size="mini" style="margin-left: 1em">
-                {{tag.slice(1,-1)}}
-              </el-tag>
-            </el-col>
-          </el-row>
-        </div>
-        <div class="content" style="text-align: left; padding-left: 2rem;padding-right: 2rem;">
-          <MarkdownDisplay :markdown="content"></MarkdownDisplay>
-        </div>
-        <div class="like" style="margin-top: 2em;">
-          <el-row :gutter="24">
-            <el-col :offset="8" :span="3">
-              <el-button type="danger" @click="loveThis">
-                <font-awesome-icon icon="heart"/> &nbsp;{{likeCountShow}}人喜爱
-              </el-button>
-            </el-col>
-            <el-col :offset="2" :span="3">
-              <el-button type="danger" @click="showPay=true">
-                <font-awesome-icon icon="coins"/>
-                打赏支持
-              </el-button>
-            </el-col>
-          </el-row>
-        </div>
-        <el-dialog title="感谢您的支持！" :visible.sync="showPay">
-          <el-image src="https://i.loli.net/2020/03/11/CxKMd62LtpyUwBf.png">
-            <div slot="placeholder" class="image-slot">
-              加载中<span class="dot">...</span>
+      <el-row :gutter="10" type="flex" justify="center" style="margin-top: 1rem;">
+        <el-col :xs="24" :sm="21" :md="19" :lg="15" :xl="12">
+          <el-card class="box-card" style="background: rgba(255,255,255,0.7)">
+            <div slot="header" class="clearfix">
+              <el-row>
+                <el-button class="backBtn" @click="prePage" style="position: absolute;left: 1em;"> 返回</el-button>
+                <h2>{{ article.title }}</h2>
+              </el-row>
+              <el-row :gutter="12">
+                <el-col :span="6" :offset="9">
+                  <label style="margin-top:0.1em;font-weight: lighter;font-size: medium">发布于
+                    {{ timeStampToString(article.pubTime, "day") }}</label>
+                </el-col>
+                <el-col :span="6" :offset="3">
+                  <el-tag size="mini" type="success">
+                    {{ article.kind }}
+                  </el-tag>
+                  <el-tag v-for="tag in tags" size="mini" style="margin-left: 1em">
+                    {{tag.slice(1,-1)}}
+                  </el-tag>
+                </el-col>
+              </el-row>
             </div>
-          </el-image>
-        </el-dialog>
+            <div class="content" style="text-align: left; padding-left: 2rem;padding-right: 2rem;">
+              <MarkdownDisplay :markdown="content"></MarkdownDisplay>
+            </div>
+            <div class="like" style="margin-top: 2em;">
+              <el-row :gutter="24">
+                <el-col :offset="8" :span="3">
+                  <el-button type="danger" @click="loveThis">
+                    <font-awesome-icon icon="heart"/> &nbsp;{{likeCountShow}}人喜爱
+                  </el-button>
+                </el-col>
+                <el-col :offset="2" :span="3">
+                  <el-button type="danger" @click="showPay=true">
+                    <font-awesome-icon icon="coins"/>
+                    打赏支持
+                  </el-button>
+                </el-col>
+              </el-row>
+            </div>
+            <el-dialog title="感谢您的支持！" :visible.sync="showPay">
+              <el-image src="https://i.loli.net/2020/03/11/CxKMd62LtpyUwBf.png">
+                <div slot="placeholder" class="image-slot">
+                  加载中<span class="dot">...</span>
+                </div>
+              </el-image>
+            </el-dialog>
 
 
-      </el-card>
-      <div class="comment-area">
-        <comment type="article" :type_id="articleId"/>
-      </div>
-    </common-layout>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10" type="flex" justify="center">
+        <el-col :xs="24" :sm="21" :md="18" :lg="13" :xl="12">
+          <div class="comment-area">
+            <comment type="article" :type_id="articleId"/>
+          </div>
+        </el-col>
+      </el-row>
+    </basic-layout>
   </div>
 </template>
 
 <script>
-  import commonLayout from "../../components/commonLayout";
+  import basicLayout from "../../components/BasicLayout";
   import {clickLove, getArticleDetail} from "../../api/blog";
   import MarkdownDisplay from "../../components/markdownDisplay";
   import Comment from "../../components/comment"
@@ -75,7 +83,7 @@
   export default {
     name: "ArticleDetail",
     components: {
-      commonLayout,
+      basicLayout,
       MarkdownDisplay,
       Comment,
       loading,
@@ -143,10 +151,10 @@
           this.content = this.article.content;
           this.tags = this.article.tags.slice(1, -1).split(',');
           this.likeCountShow = this.article.likeCount;
-          if (localStorage.userName ) {
+          if (localStorage.userName) {
             getUserByName(localStorage.userName).then((resp) => {
               if (resp.status === 200) {
-                if(!resp.data.likeList) {
+                if (!resp.data.likeList) {
                   this.userLikeList = []
                 } else {
                   this.userLikeList = resp.data.likeList.split(',');
@@ -176,6 +184,7 @@
   .fade-leave-active {
     opacity: 0;
   }
+
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 0.5s;
@@ -197,47 +206,49 @@
   }
 
   pre {
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
     box-shadow: 2px 3px 2px rgba(0, 0, 0, .1);
     border-radius: 0.4em;
     padding: 1em 1em 1em 1em;
   }
 
   p > code {
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
     padding: .3em .3em .2em .3em;
     box-shadow: 1px 2px 1px rgba(0, 0, 0, .05);
     border-radius: 0.3em;
     margin-right: 0.2em;
   }
-  table
-  {
+
+  table {
     border-collapse: collapse;
     margin: 0 auto;
     text-align: center;
   }
-  table td, table th
-  {
+
+  table td, table th {
     border: 1px solid #cad9ea;
     color: #666;
     height: 30px;
   }
-  table
-  {
+
+  table {
     background-color: #D9ECFF;
     width: 80%;
   }
-  th{
+
+  th {
     background-color: #D9ECFF;
   }
-  table tr:nth-child(odd)
-  {
+
+  table tr:nth-child(odd) {
     background: #fff;
   }
-  table tr:nth-child(even)
-  {
+
+  table tr:nth-child(even) {
     background: #ECF5FF;
   }
+
   .detail-bg {
     left: 0;
     object-fit: cover;
@@ -254,7 +265,6 @@
   .el-card__header {
     border-bottom: none;
   }
-
 
 
 </style>

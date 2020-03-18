@@ -17,10 +17,12 @@
         &nbsp;文章
       </router-link>
     </el-menu-item>
+    <!--
     <el-menu-item index="3" disabled>
       <font-awesome-icon icon="box-open" style="margin-bottom: 0.15em"/>
       &nbsp;资源
     </el-menu-item>
+    -->
     <el-menu-item index="6">
       <font-awesome-icon icon="address-card" style="margin-bottom: 0.15em"/>
       <router-link to="/about">
