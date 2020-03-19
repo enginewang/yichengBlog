@@ -1,56 +1,77 @@
 # yichengBlog
 
-基于Vue.js和Element UI搭建的自用博客，此repo为前端代码，[后端代码链接](https://github.com/enginewang/BlogBackend)
+基于Vue.js和Element UI搭建的自用博客，此repo为前端代码，[后端repo链接](https://github.com/enginewang/BlogBackend)
 
-**Vue新手，该repo仅供参考。** 后面会不断更新，欢迎提issue，demo演示：http://yicheng.me（服务器比较渣，请见谅）
+Vue新手，该repo仅供参考。后面会不断更新，欢迎提issue，demo演示：https://yicheng.me（服务器比较渣，请见谅）
 
-#### 目前包括的页面：
-主页
-文章列表页
-文章详情页（含评论区）
-用户登录页
-用户注册页
-用户个人中心页
-管理员登陆页
-后台文章管理页
-后台用户管理页
-
-
-### 功能：
+### 功能
 
 #### 已实现
 
 文章展示（支持markdown） :white_check_mark:
+
 评论功能（可回复） :white_check_mark:
+
 文章分类和索引 :white_check_mark:
+
 简单的文章搜索 :white_check_mark:
+
 用户注册、登陆（注册表单实时验证） :white_check_mark:
+
 用户个人页（展示信息，修改头像密码） :white_check_mark:
+
 用户权限管理，jwt验证 :white_check_mark:
+
 管理页对文章、用户的增删改查 :white_check_mark:
+
 一些页面的自适应布局 :white_check_mark:
 
 
+
 #### 待完成：
-自定义上传图片 :new_moon_with_face:
-注册邮箱验证 :new_moon_with_face:
-密码加密 :new_moon_with_face:
 
+上传图片
 
+注册邮箱验证码校验
 
-部分页面截图：
+资源贴系统
 
+小工具系统
 
+### 部分页面截图：
 
+主页：
 
-### 试运行
+![](https://i.loli.net/2020/03/19/VGhi5wJM9qFQelo.png)
 
-#### 安装依赖
-```
-yarn install
-```
+文章列表页：
 
-#### 本地运行（需要搭好后端）
-```
-yarn serve
-```
+![](https://i.loli.net/2020/03/19/sLNWtHEkFDnKwMP.png)
+
+文章详情页：
+
+![](https://i.loli.net/2020/03/19/GJSextyEsIjifK9.png)
+
+文章评论区：
+
+![](https://i.loli.net/2020/03/19/7d4JeCRX8LKyONp.png)
+
+用户注册页（登陆差不多，不截了）：
+
+![](https://i.loli.net/2020/03/19/Gu4ox6N5Q7mtwZR.png)
+
+用户个人页：
+
+![](https://i.loli.net/2020/03/19/JUQe6VRDgaoK9Pt.png)
+
+用户管理页：
+
+![](https://i.loli.net/2020/03/19/93zeGOTfKE4UZdW.png)
+
+文章管理页：
+
+![](https://i.loli.net/2020/03/19/V7er9zUCHGFbxKQ.png)
+
+新增文章页：
+
+![](https://i.loli.net/2020/03/19/oq4SH2NEGcnCmDI.png)
