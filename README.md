@@ -2,7 +2,7 @@
 
 基于Vue.js和Element UI搭建的自用博客，此repo为前端代码，[后端repo链接](https://github.com/enginewang/BlogBackend)
 
-Vue新手，该repo仅供参考。后面会不断更新，欢迎提issue，demo演示：https://yicheng.me（服务器比较渣，请见谅）
+Vue新手，该repo只是作为个人博客自用，仅供参考。后面当然会不断更新，欢迎提issue，demo演示：https://yicheng.me
 
 ### 功能
 
@@ -46,7 +46,7 @@ Vue新手，该repo仅供参考。后面会不断更新，欢迎提issue，demo�
 
 文章列表页：
 
-![](https://i.loli.net/2020/03/19/sLNWtHEkFDnKwMP.png)
+![articleList.png](https://i.loli.net/2020/03/19/ik1mZYlpeWou9Hc.png)
 
 文章详情页：
 
