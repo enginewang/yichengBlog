@@ -5,7 +5,7 @@
     </el-header>
     <el-main style="margin-top: 2em;margin-bottom: 2em;">
       <el-row :gutter="25" type="flex" justify="center">
-        <el-col :xs="24" :sm="17" :md="17">
+        <el-col :xs="23" :sm="17" :md="16">
           <slot name="main"/>
         </el-col>
         <el-col :xs="0" :sm="5" :md="5">

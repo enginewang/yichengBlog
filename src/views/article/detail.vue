@@ -59,7 +59,7 @@
         </el-col>
       </el-row>
       <el-row :gutter="10" type="flex" justify="center">
-        <el-col :xs="24" :sm="21" :md="18" :lg="13" :xl="12">
+        <el-col :xs="24" :sm="21" :md="19" :lg="15" :xl="12">
           <div class="comment-area">
             <comment type="article" :type_id="articleId"/>
           </div>

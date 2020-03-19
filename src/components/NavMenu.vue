@@ -17,13 +17,11 @@
         &nbsp;文章
       </router-link>
     </el-menu-item>
-    <!--
-    <el-menu-item index="3" disabled>
+    <el-menu-item index="3" disabled  class="hidden-xs-only">
       <font-awesome-icon icon="box-open" style="margin-bottom: 0.15em"/>
       &nbsp;资源
     </el-menu-item>
-    -->
-    <el-menu-item index="6">
+    <el-menu-item index="6" class="hidden-xs-only">
       <font-awesome-icon icon="address-card" style="margin-bottom: 0.15em"/>
       <router-link to="/about">
         &nbsp;关于
@@ -60,6 +58,7 @@
 
 <script>
   import {getUserByName} from "../api/user";
+  import "element-ui/lib/theme-chalk/display.css"
 
   export default {
     name: "NavMenu",

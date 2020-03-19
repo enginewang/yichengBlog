@@ -37,7 +37,8 @@
                         style="padding-left: 0;"
                         :src="article.cover"
                         :preview-src-list="imgToImgList(article.cover)"
-                        :fit="fill">
+                        fit="cover"
+                >
                 </el-image>
               </el-col>
               <el-col :span="14" :offset="1" :xs="23">
@@ -51,23 +52,21 @@
                     </el-col>
                   </el-row>
                 </div>
-                <el-row>
-                  <el-col style="margin-left: 0">
-                    <label style="font-weight: bold">发布时间： </label>{{ timeStampToString(article.pubTime) }}
-                  </el-col>
-                   <el-col>
-                     <el-tag v-for="(tag, id) in tagStringToList(article.tags)" :key="id" size="mini"
-                             style="margin-left: .5em">
-                       {{tag }}
-                     </el-tag>
-                     <el-tag size="mini" type="success" style="margin-left: 1em">
-                       {{ article.kind }}
-                     </el-tag>
-                   </el-col>
+                <el-row style="margin-left: 0; float: left">
+                  <label style="font-weight: bold">发布时间： </label>{{ timeStampToString(article.pubTime) }}
+                  <el-tag v-for="(tag, id) in tagStringToList(article.tags)" :key="id" size="mini"
+                          style="margin-left: .5em">
+                    {{tag }}
+                  </el-tag>
+                  <el-tag size="mini" type="success" style="margin-left: 1em">
+                    {{ article.kind }}
+                  </el-tag>
                 </el-row>
-                <div class="desc" style="text-align: left; margin-top: .3rem;" @click="seeDetail(article._id)">
-                  <label style="font-weight: bold">概要：</label>{{ descSimple(article.desc) }}
-                </div>
+                <el-row style="margin-left: 0; float: left">
+                  <div class="desc" style="text-align: left; margin-top: .3rem;" @click="seeDetail(article._id)">
+                    <label style="font-weight: bold">概要：</label>{{ descSimple(article.desc) }}
+                  </div>
+                </el-row>
               </el-col>
             </el-row>
           </el-card>
@@ -129,7 +128,7 @@
         }
         return result;
       },
-      goToSearchQuery(searchText){
+      goToSearchQuery(searchText) {
         this.$router.push("/article?s=" + searchText);
         location.reload();
       },
@@ -170,7 +169,7 @@
           return false;
         }
       },
-      handleQuery(){
+      handleQuery() {
         this.isLoading = true;
         let query = this.$route.query;
         if (query.s) {
@@ -179,7 +178,7 @@
           getAllArticles().then((res) => {
             if (res.status === 200) {
               this.articleList = res.data.filter(array => array.content.match(this.querySearch));
-              if(this.articleList.length>0){
+              if (this.articleList.length > 0) {
                 this.findArticle = true;
               }
               this.isLoading = false;
@@ -202,13 +201,13 @@
         //console.log(res);
         if (res.status === 200) {
           this.articleList = res.data;
+          console.log(res)
           this.handleQuery();
           this.isLoading = false;
         } else {
           console.log("Failed");
         }
       });
-
 
 
     },
@@ -266,11 +265,11 @@
 
   #articleCard:hover {
     transform: scale(1.02);
-    background: rgba(255,255,255,1);
+    background: rgba(255, 255, 255, 1);
   }
 
   #articleCard {
-    background: rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.7);
     transition: all 1000ms;
   }
 
