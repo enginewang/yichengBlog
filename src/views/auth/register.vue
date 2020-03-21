@@ -139,15 +139,13 @@
         RepassComplete: false,
         redirectTime: 3,
         hasChooseAvatar: false,
-        userAvatar: '',
+        userAvatar: "https://i.loli.net/2020/03/15/XsJjRomr1dy8u4D.png",
         avatarLibraryShow: false,
         defaultAvatarList: [
-          "https://i.loli.net/2020/03/15/og7kjRNdiyCOYwI.png",
           "https://i.loli.net/2020/03/15/XsJjRomr1dy8u4D.png",
+          "https://i.loli.net/2020/03/15/og7kjRNdiyCOYwI.png",
           "https://i.loli.net/2020/03/15/D492LpVuPrajkv1.png",
-          "https://i.loli.net/2020/03/15/EafivuJ72qAC3xK.png",
           "https://i.loli.net/2020/03/15/IVaHSh5pn46mfjy.png",
-          "https://i.loli.net/2020/03/15/htSqoEm6abWYRP1.png",
           "https://i.loli.net/2020/03/15/73SOMcNdqJmkQl6.png",
         ],
         userNameList: [],
@@ -171,10 +169,10 @@
     methods: {
       chooseAvatar(avatar) {
         this.userAvatar = avatar;
-        this.hasChooseAvatar = true;
+        //this.hasChooseAvatar = true;
       },
       showAvatarLibrary() {
-        this.avatarLibraryShow = true;
+        this.avatarLibraryShow = !this.avatarLibraryShow;
       },
       imgToImgList(img) {
         let list = [];
@@ -186,7 +184,7 @@
       },
       submituserRegisterForm() {
         this.userRegisterForm.avatar = this.userAvatar;
-        if (this.EmailComplete && this.UsernameComplete && this.PassComplete && this.RepassComplete && this.userAvatar) {
+        if (this.EmailComplete && this.UsernameComplete && this.PassComplete && this.RepassComplete) {
           userRegister(this.userRegisterForm).then((res) => {
             if (res.status === 200) {
               this.$notify({

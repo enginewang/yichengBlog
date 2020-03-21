@@ -166,7 +166,7 @@
 <script>
   import {getUserByName} from "../api/user";
   import {addComment, deleteComment, getCommentsByArticleId, getCommentsByReplyId} from "../api/comment";
-  import {getArticleDetail, updateArticle} from "../api/blog";
+  import {updateArticle} from "../api/blog";
   import MarkdownDisplay from "./markdownDisplay";
   import 'highlight.js/styles/googlecode.css'
   import commonLayout from "./commonLayout";

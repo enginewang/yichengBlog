@@ -24,10 +24,10 @@ export function getIndexArticles() {
   })
 }
 
-export function getArticleDetail(articleId) {
+export function getArticleDetail(articleId, visit) {
   return axios({
-    url: api.articleBase + '/' + articleId,
-    method: 'get'
+    url: api.articleBase + '/' + articleId + '/' + visit,
+    method: 'get',
   })
 }
 

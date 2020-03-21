@@ -62,7 +62,7 @@
             });
           }
         }).catch(error => {
-          let msg = error.response.data;
+          let msg = error.response;
           this.$notify({
             title: '登陆遇到了错误',
             message: msg,

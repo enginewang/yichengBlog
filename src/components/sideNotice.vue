@@ -12,8 +12,8 @@
         <span style="font-weight: bold">最新文章</span>
       </div>
       <div v-for="(lastestArticle, id) in LatestArticleList" :key="id" class="text item" style="padding-left: 1em;margin: 0;text-align: left">
-        <el-button type="text" @click="toArticleDetail(lastestArticle._id)" style="padding-top: 4px;padding-bottom: 4px;">{{ lastestArticle.title }}</el-button>
-        <label style="float: right;font-size: small"> {{ timeStampToString(lastestArticle.pubTime, "day") }} </label>
+        <el-button type="text" @click="toArticleDetail(lastestArticle._id)" style="padding-top: 4px;padding-bottom: 4px;">{{ lastestArticle.title }}
+          <label style="font-size: x-small;color: black">{{ timeStampToString(lastestArticle.pubTime, "day").slice(2,) }}</label></el-button>
       </div>
     </el-card>
     <el-card class="box-card" style="margin-top: 2em;" shadow="hover">

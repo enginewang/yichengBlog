@@ -11,7 +11,7 @@
         王毅诚的站点
       </router-link>
     </el-menu-item>
-    <el-menu-item index="2">
+    <el-menu-item index="2" class="hidden-xs-only">
       <font-awesome-icon icon="book" style="margin-bottom: 0.15em"/>
       <router-link to="/article">
         &nbsp;文章

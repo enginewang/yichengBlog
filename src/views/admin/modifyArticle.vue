@@ -255,7 +255,7 @@
     },
     created() {
       let articleId = this.$route.params.id;
-      getArticleDetail(articleId).then((res) => {
+      getArticleDetail(articleId, 0).then((res) => {
         if (res.status === 200) {
           this.article = res.data;
           this.form = res.data;

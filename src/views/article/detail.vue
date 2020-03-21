@@ -14,11 +14,13 @@
                 <h2>{{ article.title }}</h2>
               </el-row>
               <el-row :gutter="12">
-                <el-col :span="6" :offset="9">
-                  <label style="margin-top:0.1em;font-weight: lighter;font-size: medium">发布于
+                <el-col :span="10" :offset="7">
+                  <label style="margin-top:0.1em;font-weight: lighter;font-size: medium;margin-right: 2em;">发布于
                     {{ timeStampToString(article.pubTime, "day") }}</label>
+                  <label style="margin-top:0.1em;font-weight: lighter;font-size: medium">浏览量
+                    {{ article.readCount }}</label>
                 </el-col>
-                <el-col :span="6" :offset="3">
+                <el-col :span="6" :offset="1">
                   <el-tag size="mini" type="success">
                     {{ article.kind }}
                   </el-tag>
@@ -32,13 +34,8 @@
               <MarkdownDisplay :markdown="content"></MarkdownDisplay>
             </div>
             <div class="like" style="margin-top: 2em;">
-              <el-row :gutter="24">
-                <el-col :offset="8" :span="3">
-                  <el-button type="danger" @click="loveThis">
-                    <font-awesome-icon icon="heart"/> &nbsp;{{likeCountShow}}人喜爱
-                  </el-button>
-                </el-col>
-                <el-col :offset="2" :span="3">
+              <el-row :gutter="24" type="flex" justify="center">
+                <el-col :span="3">
                   <el-button type="danger" @click="showPay=true">
                     <font-awesome-icon icon="coins"/>
                     打赏支持
@@ -144,7 +141,7 @@
     },
     created() {
       this.articleId = this.$route.params.id;
-      getArticleDetail(this.articleId).then((res) => {
+      getArticleDetail(this.articleId, 1).then((res) => {
         console.log(res);
         if (res.status === 200) {
           this.article = res.data;
@@ -264,6 +261,14 @@
 
   .el-card__header {
     border-bottom: none;
+  }
+
+  .el-card{
+    padding-bottom: .5em;
+  }
+
+  p > a {
+    text-decoration: none;
   }
 
 

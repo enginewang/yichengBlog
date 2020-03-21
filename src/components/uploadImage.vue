@@ -2,9 +2,8 @@
   <div class="app-container">
     <el-upload
             class="avatar-uploader"
-            action="https://sm.ms/api/upload"
-            :data="smfile"
-            :show-file-list="false"
+            action="http://localhost:1323/api/upload/image"
+            :show-file-list="true"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
       <img v-if="imageUrl" :src="imageUrl" class="avatar">
