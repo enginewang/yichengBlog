@@ -31,7 +31,8 @@
               </el-row>
             </div>
             <div class="content" style="text-align: left; padding-left: 2rem;padding-right: 2rem;">
-              <MarkdownDisplay :markdown="content"></MarkdownDisplay>
+              <!--<MarkdownDisplay :markdown="content"></MarkdownDisplay>-->
+              <markdown-it-vue class=""md-body :content="content"/>
             </div>
             <div class="like" style="margin-top: 2em;">
               <el-row :gutter="24" type="flex" justify="center">
@@ -70,6 +71,8 @@
   import basicLayout from "../../components/BasicLayout";
   import {clickLove, getArticleDetail} from "../../api/blog";
   import MarkdownDisplay from "../../components/markdownDisplay";
+  import MarkdownItVue from "markdown-it-vue";
+  import "markdown-it-vue/dist/markdown-it-vue.css"
   import Comment from "../../components/comment"
   //import 'highlight.js/styles/googlecode.css'
   import 'highlight.js/styles/github.css'
@@ -84,6 +87,7 @@
       MarkdownDisplay,
       Comment,
       loading,
+      MarkdownItVue,
     },
     data() {
       return {
@@ -204,7 +208,6 @@
 
   pre {
     background: rgba(255, 255, 255, 0.4);
-    box-shadow: 2px 3px 2px rgba(0, 0, 0, .1);
     border-radius: 0.4em;
     padding: 1em 1em 1em 1em;
   }
@@ -269,6 +272,18 @@
 
   p > a {
     text-decoration: none;
+  }
+
+  .katex {
+    font: normal 1em KaTeX_Main,Times New Roman,serif;
+    line-height: 0;
+  }
+
+  p > img {
+    max-width: 100%;
+    margin-left: 6%;
+    margin-right: 6%;
+    width: 86%;
   }
 
 
