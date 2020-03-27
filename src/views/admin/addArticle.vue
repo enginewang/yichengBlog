@@ -9,6 +9,7 @@
           </el-form-item>
           <el-form-item label="文章封面">
             <el-input v-model="form.cover"></el-input>
+            <upload-image @returnUrl="getUrl"/>
           </el-form-item>
           <el-form-item label="封面预览">
             <el-image :src="form.cover" size="large"></el-image>
@@ -104,6 +105,7 @@
   } from "../../api/blog";
   import adminLayout from "../../components/adminLayout";
   import MarkdownDisplay from "../../components/markdownDisplay";
+  import uploadImage from "../../components/uploadImage";
 
   export default {
     name: "addArticle",
@@ -140,8 +142,12 @@
     components: {
       adminLayout,
       MarkdownDisplay,
+      uploadImage,
     },
     methods: {
+      getUrl(value) {
+        console.log(url);
+      },
       onSubmit() {
         this.form.author = this.username;
         this.form.tags = JSON.stringify(this.form.selectTagList);

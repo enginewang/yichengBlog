@@ -134,8 +134,8 @@
       },
       descSimple(desc) {
         let length = desc.length;
-        if (length > 100) {
-          desc = desc.slice(0, 100) + '...';
+        if (length > 200) {
+          desc = desc.slice(0, 200) + '...';
         }
         return desc;
       },

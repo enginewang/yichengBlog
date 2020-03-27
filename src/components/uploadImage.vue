@@ -1,14 +1,20 @@
 <template>
-  <div class="app-container">
+  <div class="upload-container">
     <el-upload
-            class="avatar-uploader"
-            action="http://localhost:1323/api/upload/image"
-            :show-file-list="true"
+            drag
+            action="https://yicheng.me/api/upload"
             :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            multiple>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将图片拖到此处，或<em>点击上传</em></div>
+      <!--<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>-->
     </el-upload>
+    <div v-show="hasUpload">
+      <div class="img-box" style="margin-top: 2em;">
+        <el-image :src="fileUrl"></el-image>
+        <p>URL: {{ fileUrl }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,35 +23,17 @@
     name: 'uploadImage',
     data() {
       return {
-        imageUrl: '',
-        headers: {
-          'Accept': 'text/plain'
-        },
-        smfile: {
-          smfile: null
-        }
+        fileUrl: '',
+        hasUpload: false
       }
     },
     methods: {
-      handleAvatarSuccess(res, file) {
-        //console.log("handleAvatarSucc invoked!");
-        //console.log(res);
-        //console.log(file);
-        this.imageUrl = URL.createObjectURL(file.raw);
+      handleAvatarSuccess(response, file, fileList) {
+        this.hasUpload = true;
+        this.fileUrl = "https://yicheng.me/image/" + response;
+        console.log(this.fileUrl)
+        this.$emit('returnUrl', this.fileUrl)
       },
-      beforeAvatarUpload(file) {
-        this.smfile.smfile = file;
-        //console.log(this.smfile.smfile);
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG) {
-          //console.log('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
     }
   }
 </script>

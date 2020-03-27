@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img class="bg" src="../assets/bg.jpg">
-    <div class='welcome-text'>
+      <div class='welcome-text'>
       <!--
       <div v-anime="{ scaleX: 1.2, scaleY: 1.2, duration: 5000, translateY: -50,delay: 2000 }">
         <h2 class="welcome" style="color: rgba(255,255,255, 0);">Welcome to my blog</h2>
