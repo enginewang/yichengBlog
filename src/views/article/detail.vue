@@ -32,7 +32,7 @@
             </div>
             <div class="content" style="text-align: left; padding-left: 2rem;padding-right: 2rem;">
               <MarkdownDisplay :markdown="content"></MarkdownDisplay>
-              <!--<markdown-it-vue class=""md-body :content="content"/>-->
+              <!--<markdown-it-vue class="md-body" :content="content"/>-->
             </div>
             <div class="like" style="margin-top: 2em;">
               <el-row :gutter="24" type="flex" justify="center">
@@ -71,7 +71,7 @@
   import basicLayout from "../../components/BasicLayout";
   import {clickLove, getArticleDetail} from "../../api/blog";
   import MarkdownDisplay from "../../components/markdownDisplay";
-  //import MarkdownItVue from "markdown-it-vue";
+  import MarkdownItVue from "markdown-it-vue";
   import "markdown-it-vue/dist/markdown-it-vue.css"
   import Comment from "../../components/comment"
   //import 'highlight.js/styles/googlecode.css'
@@ -85,6 +85,7 @@
     components: {
       basicLayout,
       MarkdownDisplay,
+      MarkdownItVue,
       Comment,
       loading,
     },

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MMD Lab</title>
+  <link rel="stylesheet" href="css/mmd_style.css">
+</head>
+<body>
+
+<script src="js/ammo.js"></script>
+<script type="module">
+  import * as THREE from 'js/three.js/build/three.module.js';
+  import { OutlineEffect } from 'js/three.js/examples/jsm/effects/OutlineEffect.js';
+  import { MMDLoader } from 'js/three.js/examples/jsm/loaders/MMDLoader.js';
+  import { MMDAnimationHelper } from 'js/three.js/examples/jsm/animation/MMDAnimationHelper.js';
+  let container;
+  let mesh, camera, scene, renderer, effect;
+  let helper;
+  let ready = false;
+  let clock = new THREE.Clock();
+  Ammo().then( function ( AmmoLib ) {
+    Ammo = AmmoLib;
+    init();
+    animate();
+  } );
+
+  function init() {
+
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
+
+    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+
+    // scene
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color( 0xffffff );
+
+    let ambient = new THREE.AmbientLight( 0x666666 );
+    scene.add( ambient );
+
+    let directionalLight = new THREE.DirectionalLight( 0x887766 );
+    directionalLight.position.set( - 1, 1, 1 ).normalize();
+    scene.add( directionalLight );
+
+    //
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    container.appendChild( renderer.domElement );
+
+    effect = new OutlineEffect( renderer );
+
+    // model
+
+    function onProgress( xhr ) {
+
+      if ( xhr.lengthComputable ) {
+
+        let percentComplete = xhr.loaded / xhr.total * 100;
+        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+
+      }
+
+    }
+
+    let modelFile = 'https://yicheng.me/static/mmd/miku.pmx';
+    let vmdFiles = [ 'https://yicheng.me/static/mmd/1.vmd' ];
+    let cameraFiles = [ 'https://yicheng.me/static/mmd/camera.vmd' ];
+    let audioFile = 'https://yicheng.me/static/mmd/1.mp3';
+    let audioParams = { delayTime: 160 * 1 / 30 };
+
+    helper = new MMDAnimationHelper();
+
+    let loader = new MMDLoader();
+
+    loader.loadWithAnimation( modelFile, vmdFiles, function ( mmd ) {
+
+      mesh = mmd.mesh;
+
+      helper.add( mesh, {
+        animation: mmd.animation,
+        physics: true
+      } );
+
+      loader.loadAnimation( cameraFiles, camera, function ( cameraAnimation ) {
+
+        helper.add( camera, {
+          animation: cameraAnimation
+        } );
+
+        new THREE.AudioLoader().load( audioFile, function ( buffer ) {
+
+          let listener = new THREE.AudioListener();
+          let audio = new THREE.Audio( listener ).setBuffer( buffer );
+
+          listener.position.z = 1;
+
+          helper.add( audio, audioParams );
+
+          scene.add( audio );
+          scene.add( listener );
+          scene.add( mesh );
+
+          ready = true;
+
+        }, onProgress, null );
+
+      }, onProgress, null );
+
+    }, onProgress, null );
+
+    //
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+  }
+
+  function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    effect.setSize( window.innerWidth, window.innerHeight );
+
+  }
+
+  //
+
+  function animate() {
+
+    requestAnimationFrame( animate );
+    render();
+
+  }
+
+  function render() {
+
+    if ( ready ) {
+
+      helper.update( clock.getDelta() );
+
+    }
+
+    effect.render( scene, camera );
+
+  }
+
+
+
+
+</script>
+<canvas id="c"></canvas>
+</body>
+</html>

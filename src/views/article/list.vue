@@ -34,6 +34,7 @@
             <el-row :gutter="10">
               <el-col :span="9" :xs="0">
                 <el-image
+                        id="cover"
                         style="padding-left: 0;"
                         :src="article.cover"
                         :preview-src-list="imgToImgList(article.cover)"
@@ -42,10 +43,10 @@
                 </el-image>
               </el-col>
               <el-col :span="14" :offset="1" :xs="23">
-                <div class="title">
+                <div>
                   <el-row :gutter="0" type="flex" justify="center">
                     <el-col>
-                      <el-button @click="seeDetail(article._id)" type="text"
+                      <el-button @click="seeDetail(article._id)" type="text" id="title"
                                  style="color: black; font-family: FZZhengHeiS-M-GB; font-size: large">
                         {{ article.title }}
                       </el-button>
@@ -270,6 +271,22 @@
 
   #articleCard {
     background: rgba(255, 255, 255, 0.7);
+    transition: all 1000ms;
+  }
+
+  #cover:hover {
+    transform: scale(1.1);
+  }
+
+  #cover {
+    transition: all 2000ms;
+  }
+
+  #title:hover {
+    transform: scale(1.05);
+  }
+
+  #title {
     transition: all 1000ms;
   }
 

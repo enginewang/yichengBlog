@@ -10,7 +10,7 @@ const service = axios.create({
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
   }
-})
+});
 
 
 // request拦截器
