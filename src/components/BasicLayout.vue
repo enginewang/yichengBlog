@@ -3,7 +3,7 @@
     <el-header>
       <nav-menu/>
     </el-header>
-    <el-main>
+    <el-main style="padding-top: 1.5em;">
       <el-row :gutter="0">
         <el-col :span="24">
           <slot name="main"/>
