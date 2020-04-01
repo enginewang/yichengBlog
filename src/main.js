@@ -22,6 +22,7 @@ import {
   faCouch,
   faUserCircle,
     faMarker,
+    faFlask,
 } from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import VueAnime from 'vue-animejs'
@@ -29,7 +30,7 @@ import util from './plugins/util'
 //import VueMarkdown from 'vue-markdown'
 
 
-library.add(faBook, faAddressCard, faBoxOpen, faLaptopCode, faSignInAlt, faUserPlus, faSignOutAlt, faCommentDots, faHeart, faCoins, faSmileWink, faTrash, faCouch, faUserCircle,faMarker);
+library.add(faFlask, faBook, faAddressCard, faBoxOpen, faLaptopCode, faSignInAlt, faUserPlus, faSignOutAlt, faCommentDots, faHeart, faCoins, faSmileWink, faTrash, faCouch, faUserCircle,faMarker);
 //import BasicLayout from "./components/BasicLayout";
 
 Vue.config.productionTip = false;

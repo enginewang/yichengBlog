@@ -50,6 +50,14 @@ const routes = [
     hidden: true
   },
   {
+    path: '/lab',
+    name: 'labIndex',
+    component: () => import('../views/lab/labIndex'),
+    meta: {
+      title: 'Lab',
+    },
+  },
+  {
     path: '/article',
     name: 'articleIndex',
     component: () => import('../views/article/list'),

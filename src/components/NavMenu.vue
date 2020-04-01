@@ -21,6 +21,13 @@
       <font-awesome-icon icon="box-open" style="margin-bottom: 0.15em"/>
       &nbsp;资源
     </el-menu-item>
+    <el-menu-item index="4" class="hidden-xs-only">
+      <font-awesome-icon icon="flask" style="margin-bottom: 0.15em"/>
+      <router-link to="/lab">
+        &nbsp;Lab
+      </router-link>
+
+    </el-menu-item>
     <el-menu-item index="6" class="hidden-xs-only">
       <font-awesome-icon icon="address-card" style="margin-bottom: 0.15em"/>
       <router-link to="/about">
