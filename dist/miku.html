@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>MMD Lab</title>
+  <link rel="shortcut icon" href="@/assets/lab/miku-logo.png">
   <link rel="stylesheet" href="css/mmd_style.css">
 </head>
 <body>
+<p id="loading-box" style="position: absolute;top: 50%;left:50%;font-size: xx-large;transform: translate(-50%, -50%);"><label id="load-progress"></label></p>
+
 
 <script src="https://yicheng.me/file/js/ammo.js"></script>
 <script type="module">
@@ -55,12 +58,24 @@
     // model
 
     function onProgress( xhr ) {
+      let label = document.getElementById("load-progress");
 
       if ( xhr.lengthComputable ) {
-
         let percentComplete = xhr.loaded / xhr.total * 100;
-        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
-
+        if(xhr.target.responseURL.toString().slice(-3,) === "pmx") {
+          label.innerHTML = "(1/3)模型填装中" + "(" + Math.round( percentComplete, 2 ) + "%)";
+        }
+        else if(xhr.target.responseURL.toString().slice(-3,) === "vmd") {
+          label.innerHTML = "(2/3)舞蹈填装中" + "(" + Math.round( percentComplete, 2 ) + "%)";
+        } else if(xhr.target.responseURL.toString().slice(-3,) === "mp3") {
+          label.innerHTML = "(3/3)音频填装中" + "(" + Math.round( percentComplete, 2 ) + "%)";
+          if (Math.round( percentComplete, 2 ) === 100) {
+            label.innerHTML = "加载完毕!";
+            setTimeout(function () {
+              label.innerHTML = "";
+            }, 500);
+          }
+        }
       }
 
     }
@@ -146,11 +161,6 @@
     effect.render( scene, camera );
 
   }
-
-
-
-
 </script>
-<canvas id="c"></canvas>
 </body>
 </html>
