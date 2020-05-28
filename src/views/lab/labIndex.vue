@@ -16,7 +16,16 @@
             </div>
           </el-col>
           <el-col :xs="10" :sm="10" :md="10">
-
+            <div class="lab-card bg-gradient-orange" shadow="hover" style="height: 10em;max-width: 25em;" @click="goToSpinePage()">
+              <el-row :gutter="24" type="flex" justify="space-around">
+                <el-col :xs="24" :sm="6" :md="6">
+                  <img src="@/assets/lab/mcw.png" style="height: 10em">
+                </el-col>
+                <el-col :xs="0" :sm="14" :md="14">
+                  <div class="lab-title">Spine</div>
+                </el-col>
+              </el-row>
+            </div>
           </el-col>
         </el-row>
 
@@ -37,6 +46,9 @@
     methods: {
       goToMikuPage() {
         window.location.replace("https://yicheng.me/miku.html");
+      },
+      goToSpinePage() {
+        window.location.replace("https://yicheng.me/spine.html");
       }
     }
   }

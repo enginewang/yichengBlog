@@ -34,7 +34,8 @@
     "vue-markdown-highlight": "^1.0.5",
     "vue-prism-component": "^1.1.1",
     "vue-router": "^3.1.5",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "webpack": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
@@ -48,12 +49,14 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true
+      "node": true,
+      "jquery": true
     },
     "extends": [
       "plugin:vue/essential",

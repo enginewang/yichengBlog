@@ -29,7 +29,6 @@ import VueAnime from 'vue-animejs'
 import util from './plugins/util'
 //import VueMarkdown from 'vue-markdown'
 
-
 library.add(faFlask, faBook, faAddressCard, faBoxOpen, faLaptopCode, faSignInAlt, faUserPlus, faSignOutAlt, faCommentDots, faHeart, faCoins, faSmileWink, faTrash, faCouch, faUserCircle,faMarker);
 //import BasicLayout from "./components/BasicLayout";
 
@@ -41,7 +40,6 @@ Vue.use(VueAnime);
 Vue.use(util);
 //Vue.use(Highlight);
 //Vue.use(VeeValidate, { locale: 'zh_CN' });
-
 
 // 为什么传这三个参数，官网有详细介绍
 router.beforeEach((to, from, next) => {
