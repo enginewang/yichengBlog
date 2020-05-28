@@ -24,15 +24,16 @@
             font-family: Arial, Meiryo
         }
 
-		.bg {
-			left: 0;
-			object-fit: cover;
-			height: 100%;
-			width: auto \9;
-			width: 100%;
-			z-index: 0;
-			position: absolute;
-		}
+        .bg {
+            left: 0;
+            object-fit: cover;
+            height: 100%;
+            width: auto \9;
+            width: 100%;
+            z-index: 0;
+            position: absolute;
+        }
+
         /*body {height:101vh}*/
 
         #spine-canvas {
@@ -44,7 +45,6 @@
             height: 80%;
             z-index: 10;
         }
-
 
 
         .tool {
@@ -93,7 +93,9 @@
 </head>
 <body>
 <img class="bg" src="static/ldsebg.jpg">
+<iframe src="static/pcrbgm.mp3" allow="autoplay" id="audio" loop="true" style="display: none"></iframe>
 <center>
+
     <div class="tool" style="visibility: hidden">
 			<span>
 				<select id="skeletonList">
@@ -120,9 +122,11 @@
         <span>
 				<span> 动画:</span>
 				<select id="animationList"><option value="idle">闲置</option><option value="standBy">准备</option><option
-                        value="walk">走</option><option value="run">跑</option><option value="run_gamestart">跑（入场）</option><option
+                        value="walk">走</option><option value="run">跑</option><option
+                        value="run_gamestart">跑（入场）</option><option
                         value="landing">落地</option><option value="attack">攻击</option><option
-                        value="attack_skipQuest">攻击（扫荡）</option><option value="joy_short,hold,joy_short_return">庆祝-短</option><option
+                        value="attack_skipQuest">攻击（扫荡）</option><option
+                        value="joy_short,hold,joy_short_return">庆祝-短</option><option
                         value="joy_long,hold,joy_long_return">庆祝-长</option><option value="damage">受伤</option><option
                         value="die,stop">死亡</option><option value="multi_standBy">合作-准备</option><option
                         value="multi_idle_standBy">合作-闲置</option><option value="multi_idle_noWeapon">合作-闲置（无武器）</option><option
@@ -167,6 +171,7 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
     var progressBar;
     var animationQueue = [];
     var speedFactor = 1;
+    var audio;
 
     $('#speedList').change(function () {
         var value = parseFloat($('#speedList')[0].value);
@@ -254,7 +259,10 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
         baseUnitId -= baseUnitId % 100 - 1;
         loadingSkeleton = {id: unit_id | 0, info: 111101};
         if (progressBar) progressBar.remove();
-        progressBar = document.body.appendChild(_('div', {className: 'img-progress', style: {width: '5px', opacity: 1}}));
+        progressBar = document.body.appendChild(_('div', {
+            className: 'img-progress',
+            style: {width: '5px', opacity: 1}
+        }));
         progressBar.style.width = '0';
 
         if (!generalBattleSkeletonData)
@@ -388,7 +396,12 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
                         }*/
                     });
 
-                    window.skeleton = {skeleton: skeleton, state: animationState, bounds: bounds, premultipliedAlpha: true}
+                    window.skeleton = {
+                        skeleton: skeleton,
+                        state: animationState,
+                        bounds: bounds,
+                        premultipliedAlpha: true
+                    }
                     loading = false;
                     loadingText.textContent = '';
                     (window.updateUI || setupUI)();
@@ -457,8 +470,9 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
             })
         }
         $("#setAnimation").click(function () {
+			playSound();
             var animationState = skeleton.state, forceNoLoop = false;
-            const animationQueueArray = [['idle'],['standBy'],['walk'], ['run'], ['run_gamestart'], ['attack'], ['joy_long', 'joy_long_return'], ['damage'], ['die','stop'], ['multi_idle_noWeapon'], ['111101_joyResult'], ['111101_skill0'], ['111101_skill1'], ['111101_skill2'] ];
+            const animationQueueArray = [['idle'], ['standBy'], ['walk'], ['run'], ['run_gamestart'], ['attack'], ['joy_long', 'joy_long_return'], ['damage'], ['die', 'stop'], ['multi_idle_noWeapon'], ['111101_joyResult'], ['111101_skill0'], ['111101_skill1'], ['111101_skill2']];
             var animationQueueSource = animationQueueArray[Math.floor((Math.random() * animationQueueArray.length))];
             animationQueue = Object.assign([], animationQueueSource);
             if (animationQueue[0] == 'multi_standBy') {
@@ -489,7 +503,7 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
         resize();
         //gl.clearColor(.95703, .95703, .95703, 1)
         //gl.clearColor(1, 1, 1, 0);
-		gl.clearColor(1.0, 1.0, 1.0, 1.0);
+        gl.clearColor(1.0, 1.0, 1.0, 1.0);
         //gl.clear(gl.COLOR_BUFFER_BIT);
 
         // Apply the animation state based on the delta time.
@@ -542,6 +556,17 @@ z-index: 500;border: none;-moz-appearance:none;-webkit-appearance : none ;border
 
         mvp.ortho2d(centerX - width / 2, centerY - height / 2, width, height);
         gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    function playSound() {
+        var sid = Math.round(Math.random() * 73);
+        var wavname = "static/xcw/" + sid + ".wav";
+        console.log(audio);
+        if (audio){
+			audio.pause();
+		}
+		audio = new Audio(wavname);
+		audio.play();
     }
 
     (function () {
