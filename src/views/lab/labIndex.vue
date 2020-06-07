@@ -28,6 +28,24 @@
             </div>
           </el-col>
         </el-row>
+        <br>
+        <br>
+        <el-row :gutter="25" type="flex" justify="center">
+          <el-col :xs="10" :sm="10" :md="10">
+            <div class="lab-card bg-gradient-purple" shadow="hover" style="height: 10em;max-width: 25em;" @click="goToCarGamePage()">
+              <el-row :gutter="24" type="flex" justify="space-around">
+                <el-col :xs="24" :sm="6" :md="6">
+                  <img src="@/assets/lab/car-logo.png" style="height: 10em">
+                </el-col>
+                <el-col :xs="0" :sm="14" :md="14">
+                  <div class="lab-title">Car Game</div>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+          <el-col :xs="10" :sm="10" :md="10">
+          </el-col>
+        </el-row>
 
       </div>
     </basic-layout>
@@ -49,6 +67,9 @@
       },
       goToSpinePage() {
         window.location.replace("https://yicheng.me/spine.html");
+      },
+      goToCarGamePage() {
+        window.location.replace("https://yicheng.me/carGame/game.html");
       }
     }
   }

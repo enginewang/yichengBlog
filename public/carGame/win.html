@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Game</title>
+    <link rel="stylesheet" href="../css/carGame.css">
+</head>
+<body>
+<div id="game">
+    <div class="card" id="welcome-card">
+        <h1> You WIN! </h1>
+        <h3 id="score"> Score: </h3>
+        <h3 id="bestScore"> Best Score: </h3>
+        <button id="startBtn" onclick="location.href='game.html'">Replay!</button>
+    </div>
+</div>
+<script>
+    var score = localStorage['score'];
+    var bestScore = localStorage['bestScore'];
+    document.getElementById("score").innerText = "Score:" + score;
+    document.getElementById("bestScore").innerText = "Best Score:" + bestScore;
+</script>
+</body>
+</html>

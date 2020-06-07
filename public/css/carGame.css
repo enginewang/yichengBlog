@@ -1,0 +1,52 @@
+html, body
+{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#game
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(#e4e0ba, #f7d9aa);
+}
+
+.card {
+    z-index: 100;
+    width: 40em;
+    height: 20em;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 6em;
+    background-color: rgba(250, 250, 250, 0.7);
+    padding: 3em;
+    border-radius: 1.5em;
+    text-align: center;
+}
+
+#startBtn {
+    outline: none;
+    background-color: dodgerblue;
+    width: 15em;
+    height: 5em;
+    color: white;
+    border-radius: 0.5em;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 3em;
+    border: none;
+    transition: all 1000ms;
+}
+
+#startBtn:hover {
+    background-color: orangered;
+    width: 16em;
+    height: 5.5em;
+}

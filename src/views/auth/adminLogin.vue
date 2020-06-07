@@ -60,10 +60,10 @@
             });
           }
         }).catch(error => {
-          let msg = error.response.data;
+          //let msg = error.response.data;
           this.$notify({
             title: '登陆遇到了错误',
-            message: msg,
+            message: "服务器异常，请稍后再试",
             type: 'error'
           });
         });
