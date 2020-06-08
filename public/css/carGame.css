@@ -19,7 +19,7 @@ html, body
 .card {
     z-index: 100;
     width: 40em;
-    height: 20em;
+    height: 24em;
     left: 0;
     right: 0;
     margin: auto;
@@ -30,7 +30,7 @@ html, body
     text-align: center;
 }
 
-#startBtn {
+.startBtn {
     outline: none;
     background-color: dodgerblue;
     width: 15em;
@@ -45,8 +45,28 @@ html, body
     transition: all 1000ms;
 }
 
-#startBtn:hover {
+.startBtn:hover {
     background-color: orangered;
     width: 16em;
     height: 5.5em;
+}
+
+.pcard {
+    z-index: 100;
+    width: 40em;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 6em;
+    padding: 2em;
+    text-align: center;
+}
+
+.name{
+    font-size: larger;
+    margin-right: 5em;
+}
+
+.score{
+    font-size: larger;
 }

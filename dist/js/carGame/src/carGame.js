@@ -37,6 +37,9 @@ let gameOverUI;
 let gameWinUI;
 let isOver = 0;
 let isWin = 0;
+let isAccelerate = false;
+let isChangingGround = false;
+let isPlayingAcc = false;
 let Colors = {
     red: 0xf25346,
     white: 0xd8d0d1,
@@ -52,6 +55,9 @@ let Colors = {
     light: 0xfff48f,
 };
 
+let groundColorId = 0;
+let groundColor = [0x654321, 0x66cc66, 0x077fff, 0xff6100];
+
 if (!localStorage['bestScore']) {
     localStorage.setItem("bestScore", "0");
 }
@@ -65,13 +71,20 @@ let Tree = function () {
     this.mesh = new THREE.Object3D();
     this.mesh.name = "tree";
 
-    let foliageGeom = new THREE.DodecahedronGeometry(20);
+    let foliageGeom = new THREE.DodecahedronGeometry(14);
     let foliageMat = new THREE.MeshPhongMaterial({color: Colors.green, shading: THREE.FlatShading});
     let foliage = new THREE.Mesh(foliageGeom, foliageMat);
     this.mesh.add(foliage);
     foliage.position.y = 60;
     foliage.rotation.y = Math.random() * Math.PI;
     foliage.castShadow = true;
+
+    let foliageGeom2 = new THREE.DodecahedronGeometry(24);
+    let foliage2 = new THREE.Mesh(foliageGeom2, foliageMat);
+    this.mesh.add(foliage2);
+    foliage2.position.y = 35;
+    foliage2.rotation.y = Math.random() * Math.PI;
+    foliage2.castShadow = true;
 
     let trunkGeom = new THREE.CylinderGeometry(Math.abs(Math.random() * 3) + 1, Math.abs(Math.random() * 5) + 3, 100);
     let trunkMat = new THREE.MeshPhongMaterial({color: Colors.brown, shading: THREE.FlatShading});
@@ -329,7 +342,7 @@ Cloud.prototype.rotate = function () {
 //window.addEventListener('load', init, false);
 
 function checkDeath() {
-    console.log("checkDeath");
+    //console.log("checkDeath");
     if (HP <= 0 && isOver === 0) {
         HP = 0;
         updateHPUI();
@@ -343,8 +356,8 @@ function checkDeath() {
 }
 
 function checkWin() {
-    console.log("checkWin");
-    if (endLine.mesh.position.z > 0 && isWin === 0) {
+    //console.log("checkWin");
+    if (endLine.mesh.position.z > 20 && isWin === 0) {
         isWin = 1;
         playWinAudio();
         localStorage.setItem("score", coinNum[0].toString());
@@ -365,6 +378,7 @@ function init() {
     createLights();
     createCar();
     createGround();
+    createRoad();
     createLines();
     createEndLine();
     createTrees();
@@ -375,16 +389,13 @@ function init() {
     createBombUI();
     createHeart();
     createPickBomb();
-    //createLevel1UI();
     createHPUI();
     createHPBarUI();
     createRoadUI();
     createOtherCars();
     setInterval(checkDeath, 1000);
     setInterval(checkWin, 1000);
-    loop();
-    //loop();
-    //document.addEventListener('keyup', handleKeyUp, false);
+    tick();
 }
 
 
@@ -438,6 +449,17 @@ function playNoBombAudio() {
     audio.play();
 }
 
+function playAccelerateAudio() {
+    if (!isPlayingAcc){
+        var audio = new Audio('media/accelerate.mp3');
+        audio.play();
+        isPlayingAcc = true;
+        setTimeout(function () {
+            isPlayingAcc = false;
+        },5000)
+    }
+}
+
 function playWinAudio() {
     var audio = new Audio('media/win.mp3');
     audio.play();
@@ -483,6 +505,9 @@ function createScene() {
 
     window.addEventListener('resize', handleWindowResize, false);
 }
+
+
+
 
 function handleWindowResize() {
     HEIGHT = window.innerHeight;
@@ -538,26 +563,27 @@ function createOtherCars() {
     for (let i = 0; i < 20; i++) {
         let otherCar = new Car(Colors.blue);
         scene.add(otherCar.mesh);
-        otherCar.mesh.position.x = Math.random() * -160 + 80;
+        otherCar.mesh.position.x = Math.random() * -120 + 60;
         otherCar.mesh.position.z = distance + Math.random() * 200;
         otherCar.mesh.scale.set(0.5, 0.5, 0.5);
         otherCar.mesh.position.y = 14;
         otherCar.mesh.rotation.y = Math.PI;
-        let speed = 0.33 + Math.random() * 0.33;
+        let speed = 0.33;
         //console.log(distance);
         console.log(otherCar.mesh.position.z);
         distance -= 300;
         otherCars.push(otherCar);
         otherCarsSpeed.push(speed);
     }
-    console.log(otherCars);
+    //console.log(otherCars);
 }
 
 function createGround() {
-    let ground = new THREE.Object3D();
+    ground = new THREE.Object3D();
     let groundGeom = new THREE.PlaneGeometry(2 * WIDTH, 2 * WIDTH, 1, 1);
+    console.log(groundColor[groundColorId])
     let groundMat = new THREE.MeshPhongMaterial({
-        color: Colors.ground,
+        color: groundColor[groundColorId],
         shading: THREE.FlatShading,
         side: THREE.DoubleSide,
     });
@@ -566,7 +592,9 @@ function createGround() {
     scene.add(ground.mesh);
     ground.mesh.position.y = 0;
     ground.mesh.rotation.x = -Math.PI / 2;
+}
 
+function createRoad() {
     let road = new THREE.Object3D();
     let roadMaterial = new THREE.MeshBasicMaterial({color: 0x222222, side: THREE.DoubleSide});
     let roadGeometry = new THREE.CubeGeometry(200, 2 * WIDTH, 1, 10);
@@ -698,7 +726,7 @@ function createHole() {
         distance -= 400;
         holes.push(hole);
     }
-    console.log(holes);
+    //console.log(holes);
 }
 
 function createHeart() {
@@ -716,7 +744,7 @@ function createHeart() {
 
 function createCoinUI() {
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'Coin:' + coinNum[level].toString();
         coinUI = new THREE.Object3D();
         let CoinUIgeometry = new THREE.TextGeometry(text, {
@@ -755,7 +783,7 @@ function createBombUI() {
     bombLabel.mesh.position.z = -300;
 
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = ":" + bombNum.toString();
         bombUI = new THREE.Object3D();
         let BombUIgeometry = new THREE.TextGeometry(text, {
@@ -785,7 +813,7 @@ function createBombUI() {
 
 function createLevel1UI() {
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'LEVEL 1';
         level1UI = new THREE.Object3D();
         let level1UIgeometry = new THREE.TextGeometry(text, {
@@ -816,7 +844,7 @@ function createLevel1UI() {
 
 function createHPUI() {
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'HP';
         HPTextUI = new THREE.Object3D();
         let HPTextUIgeometry = new THREE.TextGeometry(text, {
@@ -953,12 +981,9 @@ function createGameOverUI() {
     GameOverBtn.mesh.rotation.x = -Math.PI / 10;
     GameOverBtn.mesh.position.x = 0;
     GameOverBtn.mesh.position.z = 88;
-    GameOverBtn.mesh.onclick = function () {
-        console.log("click");
-    };
 
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'Game Over';
         var GameOverText = new THREE.Object3D();
         let GameOverTextgeometry = new THREE.TextGeometry(text, {
@@ -986,7 +1011,7 @@ function createGameOverUI() {
     });
 
     const loader2 = new THREE.FontLoader();
-    loader2.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader2.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'Restart';
         var GameOverBtnText = new THREE.Object3D();
         let GameOverBtnTextgeometry = new THREE.TextGeometry(text, {
@@ -1032,7 +1057,7 @@ function createGameWinUI() {
     GameWinBack.mesh.position.x = 0;
     GameWinBack.mesh.position.z = 80;
     const loader = new THREE.FontLoader();
-    loader.load('../js/carGame/lib/helvetiker_regular.typeface.json', (font) => {
+    loader.load('js/lib/helvetiker_regular.typeface.json', (font) => {
         let text = 'You WIN!';
         var GameWinText = new THREE.Object3D();
         let GameWinTextgeometry = new THREE.TextGeometry(text, {
@@ -1061,7 +1086,7 @@ function createGameWinUI() {
 }
 
 
-function loop() {
+function tick() {
     let carSpeed = 100 * clock.getDelta();
     //time += 1;
     controls.update();
@@ -1078,15 +1103,12 @@ function loop() {
     if (clExist) {
         clScale += 0.1;
         cl.mesh.scale.set(clScale, clScale, clScale);
-        console.log(clScale);
     } else {
         clScale = 1;
     }
 
     if (carUI.mesh.position.x < -215) {
-        carUI.mesh.position.x += 0.02;
-        if (carUI.mesh.position.x % 2 === 0) {
-        }
+        carUI.mesh.position.x += 0.02*speed;
     }
     endLine.mesh.position.z += speed;
     trees.forEach(function (tree) {
@@ -1123,14 +1145,16 @@ function loop() {
         if (collisionPlayer(heart.mesh.position.x, heart.mesh.position.z, 15, 20)) {
             hearts.splice(i, 1);
             scene.remove(heart.mesh);
-            if (HP > 90) {
-                HP = 100
+            if (HP >= 90) {
+                HP = 100;
+                updateHPUI();
             }
             else{
                 HP += 10;
+                updateHPUI();
             }
             playGetHeartAudio();
-            updateHPUI();
+
         } else if (heart.mesh.position.z < 200) {
             heart.mesh.position.z += speed;
             heart.mesh.rotation.y += 0.05;
@@ -1147,7 +1171,7 @@ function loop() {
             bombNum += 1;
             playGetBombAudio();
             updateBombUI();
-            console.log(bombNum);
+            //console.log(bombNum);
             //updateBombUI();
         } else if (pbomb.mesh.position.z < 200) {
             pbomb.mesh.position.z += speed;
@@ -1163,7 +1187,7 @@ function loop() {
             hole.mesh.position.z += speed;
             if (collisionPlayer(hole.mesh.position.x, hole.mesh.position.z, 15, 15)) {
                 //holes.splice(i, 1);
-                console.log("Hole!");
+                //console.log("Hole!");
                 HP -= 0.2;
                 updateHPUI();
             }
@@ -1195,12 +1219,9 @@ function loop() {
             cl.mesh.position.z = otherCar.mesh.position.z;
             otherCars.splice(j, 1);
             playCrashAudio();
-            console.log(cl.mesh.scale);
             scene.remove(otherCar.mesh);
             HP -= 20;
             updateHPUI();
-            console.log("HP=" + HP);
-            console.log(otherCarsSpeed);
             setTimeout(function () {
                 scene.remove(cl.mesh);
                 clScale = 1;
@@ -1213,7 +1234,6 @@ function loop() {
                 for (var b = 0; b < bombList.length; b++) {
                     var bomb = bombList[b];
                     if (collision(otherCar.mesh.position.x, otherCar.mesh.position.z, bomb.mesh.position.x, bomb.mesh.position.z, 10, 10)) {
-                        console.log("Strike!");
                         cl = new CrashLight();
                         clExist = 1;
                         scene.add(cl.mesh);
@@ -1245,26 +1265,6 @@ function loop() {
             car.mesh.position.x -= carSpeed;
         }
     }
-    if (!isThrowingBomb) {
-        if (keyboard.pressed("space") || keyboard.pressed("space")) {
-            if (bombNum > 0) {
-                isThrowingBomb = true;
-                console.log("Bomb");
-                createBomb();
-                --bombNum;
-                console.log(bombNum);
-                console.log(bombList);
-                playReleaseBombAudio();
-                updateBombUI();
-                // 1s后才能再扔
-                setTimeout(function () {
-                    isThrowingBomb = false;
-                }, 1000);
-            } else {
-                playNoBombAudio();
-            }
-        }
-    }
 
     if (keyboard.pressed("right") || keyboard.pressed("D")) {
         if (car.mesh.position.x < 85) {
@@ -1278,9 +1278,49 @@ function loop() {
         car.mesh.position.z += carSpeed;
     }
 
+    if (!isThrowingBomb) {
+        if (keyboard.pressed("enter") || keyboard.pressed("J")) {
+            if (bombNum > 0) {
+                isThrowingBomb = true;
+                createBomb();
+                --bombNum;
+                playReleaseBombAudio();
+                updateBombUI();
+                // 1s后才能再扔
+                setTimeout(function () {
+                    isThrowingBomb = false;
+                }, 1000);
+            } else {
+                playNoBombAudio();
+            }
+        }
+    }
+
+    if (!isAccelerate) {
+        if (keyboard.pressed("space")) {
+            playAccelerateAudio();
+            isAccelerate = true;
+            speed = 3;
+            setTimeout(function () {
+                isAccelerate = false;
+                speed = 1;
+            }, 1000);
+        }
+    }
+    if (!isChangingGround){
+        if (keyboard.pressed("l")) {
+            isChangingGround = true;
+            changeGroundColor();
+            setTimeout(function () {
+                isChangingGround = false;
+            },1000)
+        }
+    }
+
+
     renderer.render(scene, camera);
 
-    requestAnimationFrame(loop);
+    requestAnimationFrame(tick);
 }
 
 // 检测与玩家小车是否碰撞
@@ -1310,7 +1350,7 @@ function updateCoinUI() {
 }
 
 function updateHPUI() {
-    if (HP < 100 && HP >= 0) {
+    if (HP <= 100 && HP >= 0) {
         scene.remove(HPBarUI.mesh);
         createHPBarUI();
     }
@@ -1320,3 +1360,12 @@ function updateBombUI() {
     scene.remove(bombUI.mesh);
     createBombUI();
 }
+
+function changeGroundColor() {
+    groundColorId = (groundColorId + 1)%(groundColor.length);
+    isChangingGround = true;
+    console.log("changeColor" + groundColor);
+    scene.remove(ground.mesh);
+    createGround();
+}
+
