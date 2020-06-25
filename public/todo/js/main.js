@@ -2,18 +2,13 @@
 //const button = document.getElementById("button");
 const todo = document.getElementById("todo");
 let todoList = [];
-let todoListSorted = [];
 let sorted = 0;
 var filter_complete = false;
 var filter_active = false;
 var filter_search = false;
-var search_text = "";
 var syncServer = 0;
 var $ = function (sel) {
     return document.querySelector(sel);
-};
-var $All = function (sel) {
-    return document.querySelectorAll(sel);
 };
 
 document.getElementById("addBtn").onclick = function () {
@@ -411,7 +406,11 @@ function closeSpine() {
 }
 
 window.onload = function () {
-    //flushFromServer();
-    flush();
-    showSaying();
+    if(localStorage.getItem("username")){
+        //flushFromServer();
+        flush();
+        showSaying();
+    } else{
+        location.href = "login.html";
+    }
 };
