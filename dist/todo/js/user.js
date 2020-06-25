@@ -16,7 +16,7 @@ function loadUserInfo() {
                 document.getElementById("title").innerText = resp["name"];
             }
         };
-        xhttp.open("GET", "http://167.179.66.112:1323/api/username/" + username.toString(), true);
+        xhttp.open("GET", "https://yicheng.me/todoapi/username/" + username.toString(), true);
         xhttp.send();
     } else {
         showMsg("请先登录");

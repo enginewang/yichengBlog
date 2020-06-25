@@ -117,7 +117,7 @@ function uploadTodo() {
             console.log(xmlHttp.responseText);
         }
     };
-    xmlHttp.open("post", "http://167.179.66.112:1323/api/updateTodo/" + username.toString());
+    xmlHttp.open("post", "https://yicheng.me/todoapi/updateTodo/" + username.toString());
     xmlHttp.setRequestHeader("content-type", "application/json");
     xmlHttp.send(newTodo);
 }
