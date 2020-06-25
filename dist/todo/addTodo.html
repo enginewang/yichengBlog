@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Todo</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bellota:wght@700&family=Titillium+Web:wght@700&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div id="msg-bar"></div>
+    <div class="add-todo bg-gradient-primary">
+        <h1 id="title" style="margin-block-start: 0; padding-top: 0.5em">Add Todo</h1>
+        <h4 id="notice"> - Add your todo here  - </h4>
+        <input type="text" id="inputTaskName" placeholder="Enter task text"/>
+        <div class="line">
+            <svg t="1592229320960" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1464" width="30" height="30"><path d="M107.352983 950.857143l164.571429 0 0-164.571429-164.571429 0 0 164.571429zM308.49584 950.857143l182.857143 0 0-164.571429-182.857143 0 0 164.571429zM107.352983 749.714286l164.571429 0 0-182.857143-164.571429 0 0 182.857143zM308.49584 749.714286l182.857143 0 0-182.857143-182.857143 0 0 182.857143zM107.352983 530.285714l164.571429 0 0-164.571429-164.571429 0 0 164.571429zM527.924411 950.857143l182.857143 0 0-164.571429-182.857143 0 0 164.571429zM308.49584 530.285714l182.857143 0 0-164.571429-182.857143 0 0 164.571429zM747.352983 950.857143l164.571429 0 0-164.571429-164.571429 0 0 164.571429zM527.924411 749.714286l182.857143 0 0-182.857143-182.857143 0 0 182.857143zM326.781554 256l0-164.571429q0-7.428571-5.428571-12.857143t-12.857143-5.428571l-36.571429 0q-7.428571 0-12.857143 5.428571t-5.428571 12.857143l0 164.571429q0 7.428571 5.428571 12.857143t12.857143 5.428571l36.571429 0q7.428571 0 12.857143-5.428571t5.428571-12.857143zM747.352983 749.714286l164.571429 0 0-182.857143-164.571429 0 0 182.857143zM527.924411 530.285714l182.857143 0 0-164.571429-182.857143 0 0 164.571429zM747.352983 530.285714l164.571429 0 0-164.571429-164.571429 0 0 164.571429zM765.638697 256l0-164.571429q0-7.428571-5.428571-12.857143t-12.857143-5.428571l-36.571429 0q-7.428571 0-12.857143 5.428571t-5.428571 12.857143l0 164.571429q0 7.428571 5.428571 12.857143t12.857143 5.428571l36.571429 0q7.428571 0 12.857143-5.428571t5.428571-12.857143zM985.067269 219.428571l0 731.428571q0 29.714286-21.714286 51.428571t-51.428571 21.714286l-804.571429 0q-29.714286 0-51.428571-21.714286t-21.714286-51.428571l0-731.428571q0-29.714286 21.714286-51.428571t51.428571-21.714286l73.142857 0 0-54.857143q0-37.714286 26.857143-64.571429t64.571429-26.857143l36.571429 0q37.714286 0 64.571429 26.857143t26.857143 64.571429l0 54.857143 219.428571 0 0-54.857143q0-37.714286 26.857143-64.571429t64.571429-26.857143l36.571429 0q37.714286 0 64.571429 26.857143t26.857143 64.571429l0 54.857143 73.142857 0q29.714286 0 51.428571 21.714286t21.714286 51.428571z" p-id="1465" fill="#ffffff"></path></svg>
+            <input type="text" class="datepicker" id="datepicker" placeholder="Choose DeadLine">
+        </div>
+        <div class="line select-bar">
+            <select name="important-select" id="important-select">
+                <option value="0">Important</option>
+                <option value="1">Not Important</option>
+            </select>
+        </div>
+        <div class="line select-bar">
+            <select name="urgent-select" id="urgent-select">
+                <option value="0">Urgent</option>
+                <option value="1">Not Urgent</option>
+            </select>
+        </div>
+        <div class="notify"><span id="notifyType" class=""></span></div>
+        <div class="todo-footer">
+            <button id="add-btn" class="bottom-btn" onclick="addTodo()">Add Todo</button>
+            <button id="back-btn" class="bottom-btn" onclick="location.href='index.html'">Cancel</button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="js/date.js"></script>
+<script src="js/common.js"></script>
+<script src="js/addTodo.js"></script>
+<script>
+    datepicker.init('.datepicker');
+</script>
+</html>
+
+
