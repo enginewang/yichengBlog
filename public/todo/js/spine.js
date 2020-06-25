@@ -311,6 +311,9 @@ function setupUI() {
         })
     };
     document.getElementById("setAnimation").onclick = function () {
+        var bubbleText = ["休息一下吧！", "我会自动保存的", "添加个新计划？", "出去走动一下吧", "任务都完成了吗"];
+        var random_id = randomBetween(0, bubbleText.length);
+        showBubble(bubbleText[random_id]);
         //playSound();
         var animationState = skeleton.state, forceNoLoop = false;
         const animationQueueArray = [['joy_long', 'joy_long_return'], ['109701_joyResult'], ['109701_skill2']];

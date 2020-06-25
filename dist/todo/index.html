@@ -6,10 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDo APP</title>
     <link rel="stylesheet" href="css/style.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Bellota:wght@700&family=Titillium+Web:wght@700&family=ZCOOL+XiaoWei&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Bellota:wght@700&family=Titillium+Web:wght@700&family=ZCOOL+XiaoWei&display=swap"
           rel="stylesheet">
 </head>
 <body>
+<img src="img/doc.png" id="doc" onclick="closeDoc()" style="visibility: hidden">
+
+<div id="bubble" style="visibility: hidden">
+    <p id="bubble-text"></p>
+    <img src="img/bubble.png" id="bubble-bg">
+</div>
 
 <img id="leim-icon" src="img/leim-icon.png" onclick="showSpine()">
 
@@ -83,10 +89,16 @@
         <p id="saying" class="saying"></p>
         <p id="author"></p>
     </div>
+    <div id="modal-doc" class="modal">
+        <p id="doc-text" class="saying"></p>
+        <button id="show-doc" class="doc-btn" onclick="showDoc()">是</button>
+        <button id="cancel-doc" class="doc-btn" onclick="closeDocModal()">否</button>
+    </div>
     <div class="list-todo">
         <ul id="todo"></ul>
     </div>
     <button id="delCompleteBtn" onclick="deleteComplete()" style="visibility: hidden">Delete Complete</button>
+    <span id="activeCount">Active: </span>
     <div>
         <p class="filters">
             <button class="block"></button>

@@ -135,6 +135,15 @@ function showMsg(text) {
     }, 2000)
 }
 
+function showBubble(text) {
+    document.getElementById("bubble-text").innerHTML = text;
+    document.getElementById("bubble").style.visibility = "visible";
+    setTimeout(function () {
+        document.getElementById("bubble").style.visibility = "hidden";
+        document.getElementById("bubble-text").innerHTML = "";
+    }, 2000)
+}
+
 
 function logout() {
     goToLogin();
@@ -220,9 +229,11 @@ function changeTheme() {
     if (theme === "dark") {
         setBlueTheme();
         localStorage.setItem("theme", "blue");
+        showBubble("切换到了蓝色主题")
     } else {
         setDarkTheme();
         localStorage.setItem("theme", "dark");
+        showBubble("切换到了夜间主题")
     }
 }
 

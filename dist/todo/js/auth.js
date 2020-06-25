@@ -44,6 +44,7 @@ function submitLogin()
             localStorage.setItem("sorted", "0");
             showMsg("登录成功!即将跳转到主页");
             setTimeout(function () {
+                localStorage.setItem("first-login", "true");
                 window.location.replace("index.html");
             }, 1000);
         } else if(xmlHttp.status === 401){

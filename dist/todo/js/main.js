@@ -1,5 +1,9 @@
-//const input = document.getElementById("input");
-//const button = document.getElementById("button");
+/* by enginewang
+   github: https://github.com/enginewang
+   website: https://yicheng.me
+   last update: 2020.06.25
+*/
+
 const todo = document.getElementById("todo");
 let todoList = [];
 let sorted = 0;
@@ -43,6 +47,7 @@ function prepareSync() {
     }, 3000)
 }
 
+// 从服务器刷新数据到本地，只有登录之后来到index才会调用，其他时候尽量会调用flush以减少响应时间
 function flushFromServer() {
     console.log(localStorage);
     var username = localStorage["username"];
@@ -56,7 +61,6 @@ function flushFromServer() {
     if (username) {
         loadTodo(username);
     }
-    showSaying();
 }
 
 // 从服务器加载todo
@@ -104,9 +108,11 @@ function getTodoListFromLocalStorage() {
 function flush() {
     flushTheme();
     flushLang();
+    console.log(localStorage);
     todo.innerHTML = null;
     getTodoListFromLocalStorage();
     console.log(todoList);
+    judgeCompleteAndActive();
     //var todoListStore = todoList;
     if (sorted === 0) {
         todoList = todoList.sort(compareTime("createTime", -1));
@@ -142,7 +148,6 @@ function flush() {
             item.classList.remove("completed");
             checkbox.checked = todoList[i].completed;
         }
-        showDeleteCompleteBtn();
 
         checkbox.addEventListener("click", function (e) {
             todoList[i].completed = e.target.checked;
@@ -157,7 +162,7 @@ function flush() {
                 item.classList.remove("completed");
                 checkbox.checked = todoList[i].completed;
             }
-            showDeleteCompleteBtn();
+            judgeCompleteAndActive();
         });
 
         const text = document.createElement("p");
@@ -248,6 +253,7 @@ function toggleAll() {
             todoList[i].completed = true;
             allFinish = false;
         }
+        showBubble("一键完成也太强了");
     }
     if (allFinish) {
         for (let i = 0; i < todoList.length; i++) {
@@ -255,6 +261,7 @@ function toggleAll() {
             todo.childNodes[i].classList.remove("completed");
             todoList[i].completed = false;
         }
+        showBubble("全都恢复为未完成了");
     }
     localStorage.setItem("todo", JSON.stringify(todoList));
     prepareSync();
@@ -313,17 +320,30 @@ function OnInput(event) {
 }
 
 // 决定是否显示deleteComplete按钮（取决于是否有已完成的Todo））
-function showDeleteCompleteBtn() {
+function judgeCompleteAndActive() {
+    var activeCount = 0;
     let hasCompleteTodo = false;
     for (let i = 0; i < todoList.length; i++) {
         if (todoList[i].completed) {
             hasCompleteTodo = true;
+        } else {
+            activeCount += 1;
         }
     }
     if (hasCompleteTodo) {
         document.getElementById('delCompleteBtn').style.visibility = "visible";
+        if(isZH()){
+            document.getElementById("delCompleteBtn").innerText = "删除已完成";
+        }else {
+            document.getElementById("delCompleteBtn").innerText = "Delete Complete";
+        }
     } else {
         document.getElementById('delCompleteBtn').style.visibility = "hidden";
+    }
+    if(isZH()){
+        document.getElementById("activeCount").innerText = "未完成：" + activeCount.toString();
+    }else {
+        document.getElementById("activeCount").innerText = "Active: " + activeCount.toString();
     }
 }
 
@@ -337,6 +357,7 @@ function deleteComplete() {
             prepareSync();
         }
     }
+    showBubble("做完的都删除了")
 }
 
 function sortTodo() {
@@ -347,20 +368,32 @@ function sortTodo() {
     }
     console.log(sorted);
     localStorage.setItem("sorted", sorted.toString());
+    if (sorted === 0) {
+        showBubble("按添加时间逆序");
+    } else if (sorted === 1) {
+        showBubble("按截止时间顺序");
+        //console.log(todoShow);
+    } else if (sorted === 2) {
+        showBubble("按截止时间逆序");
+        //console.log(todoShow);
+    } else {
+        showBubble("按添加时间顺序");
+    }
     flush();
 }
 
 function changeLang() {
     if (localStorage.getItem("lang") !== "en") {
         localStorage.setItem("lang", "en");
+        showBubble("切换为英文<span style='font-size: 2px'>(不过我不会英文</span>");
     } else {
         localStorage.setItem("lang", "zh");
+        showBubble("切换为中文");
     }
     console.log(localStorage);
     //prepareSync();
     flush();
 }
-
 
 
 function showSaying() {
@@ -391,6 +424,33 @@ function showSaying() {
     }, 2000)
 }
 
+function showDocModal() {
+    //document.getElementById("modal").style.visibility = "visible";
+    document.getElementById('modal-doc').style.display = 'block';
+    document.getElementById("doc-text").innerText = "需要看看使用教程吗？";
+    setTimeout(function () {
+        document.getElementById('modal-doc').style.opacity = 1;
+    }, 20);
+}
+
+function closeDocModal() {
+    document.getElementById('modal-doc').style.opacity = 0;  //  修改div的透明度
+    //  延迟400毫秒
+    setTimeout(function () {
+        document.getElementById('modal-doc').style.display = 'none';  //  修改div的display
+    }, 400);
+}
+
+function showDoc(){
+    document.getElementById("doc").style.visibility = "visible";
+}
+
+function closeDoc(){
+    document.getElementById("doc").style.visibility = "hidden";
+    closeDocModal();
+}
+
+
 function randomBetween(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
@@ -398,19 +458,31 @@ function randomBetween(min, max) {
 function showSpine() {
     document.getElementById("spine").style.visibility = "visible";
     document.getElementById("leim-icon").style.visibility = "hidden";
+    showBubble("有什么事吗");
 }
 
 function closeSpine() {
     document.getElementById("spine").style.visibility = "hidden";
     document.getElementById("leim-icon").style.visibility = "visible";
+    showBubble("再见👋");
 }
 
 window.onload = function () {
-    if(localStorage.getItem("username")){
-        //flushFromServer();
-        flush();
-        showSaying();
-    } else{
+    if (localStorage.getItem("username")) {
+        // 如果是从登录进入会从服务器刷新数据到本地，并且显示教程提示
+        if (localStorage.getItem("first-login") === "true"){
+            flushFromServer();
+            showDocModal();
+            showBubble("欢迎~");
+            localStorage.setItem("first-login", "false");
+        } else{
+            // 一般情况，会普通刷新localStorage的数据到本地，然后随机显示一条有关时间和计划的名人名言
+            flush();
+            showSaying();
+        }
+    } else {
+        showBubble("先去登录吧~");
+        // localStorage没有用户信息的话直接跳转到登录页面
         location.href = "login.html";
     }
 };
