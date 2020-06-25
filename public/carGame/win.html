@@ -27,7 +27,7 @@
     document.getElementById("bestScore").innerText = "Best Score:" + bestScore;
     function submitScore() {
         var name = document.getElementById("playerName").value;
-        var url = "http://167.179.66.112:1323/api/" + name + "/addToScore/" + score;
+        var url = "https://yicheng.me/todoapi/" + name + "/addToScore/" + score;
         var httpRequest = new XMLHttpRequest();
         httpRequest.open('GET', url, true);
         httpRequest.send();

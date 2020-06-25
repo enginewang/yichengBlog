@@ -19,7 +19,7 @@ function submitRegister()
             showMsg("这个用户名已经存在了，请换一个用户名！");
         }
     };
-    xmlHttp.open("post", "http://167.179.66.112:1323/api/register");
+    xmlHttp.open("post", "https://yicheng.me/todoapi/register");
     xmlHttp.setRequestHeader("content-type","application/json");
     xmlHttp.send(formData);
 }
@@ -50,7 +50,7 @@ function submitLogin()
             showMsg(xmlHttp.responseText);
         }
     };
-    xmlHttp.open("post", "http://167.179.66.112:1323/api/auth/userLogin");
+    xmlHttp.open("post", "https://yicheng.me/todoapi/auth/userLogin");
     xmlHttp.setRequestHeader("content-type","application/json");
     xmlHttp.send(formData);
 };
