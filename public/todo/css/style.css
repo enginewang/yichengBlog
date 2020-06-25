@@ -55,6 +55,7 @@ input {
     color: #ffffff;
     padding: 8px;
     font-size: 20px;
+    width: 36vw;
 }
 
 ::placeholder {
