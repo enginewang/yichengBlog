@@ -104,16 +104,20 @@ function getTodoListFromLocalStorage() {
 }
 
 
-// 从localStorage中刷新表单
+// 从localStorage中刷新表单，最核心的逻辑
 function flush() {
+    // 刷新主题
     flushTheme();
+    // 刷新语言
     flushLang();
-    console.log(localStorage);
+    // 清空todo
     todo.innerHTML = null;
+    // 加载localStorage的信息到todoList数组
     getTodoListFromLocalStorage();
     console.log(todoList);
+    // 通过是否存在已完成项目来判断是否显示"删除已完成"按钮
     judgeCompleteAndActive();
-    //var todoListStore = todoList;
+    // sort逻辑，利用js的数组自带的sort加前面自定义的compareTime函数来实现排序
     if (sorted === 0) {
         todoList = todoList.sort(compareTime("createTime", -1));
     } else if (sorted === 1) {
@@ -125,20 +129,18 @@ function flush() {
     } else {
         todoList = todoList.sort(compareTime("createTime", 1));
     }
-
-
-    console.log(todoList);
+    // 最核心的for循环，遍历要渲染的todoList
     for (let i = 0; i < todoList.length; i++) {
-
+        // 创建<li>标签，表示每一条todo
         const item = document.createElement("li");
         item.id = "item";
-
-        // create checkbox to update completed state
+        // 创建checkbox来实现完成/未完成的toggle
         const checkbox = document.createElement("input");
 
         checkbox.type = "checkbox";
         checkbox.classList.add("toggle");
 
+        // 通过判断完成与未完成，来增加样式，显示complete与incomplete的区别
         if (todoList[i].completed) {
             item.classList.add("completed");
             item.classList.remove("uncompleted");
@@ -148,10 +150,11 @@ function flush() {
             item.classList.remove("completed");
             checkbox.checked = todoList[i].completed;
         }
-
+        // checkbox的toggle逻辑
         checkbox.addEventListener("click", function (e) {
             todoList[i].completed = e.target.checked;
             localStorage.setItem("todo", JSON.stringify(todoList));
+            // 只要发生改变，触发prepareSync进行延时更新
             prepareSync();
             if (todoList[i].completed) {
                 item.classList.add("completed");
@@ -164,7 +167,7 @@ function flush() {
             }
             judgeCompleteAndActive();
         });
-
+        // 重要/紧急的icon显示逻辑
         const icons = document.createElement("p");
         icons.className = "icons";
         if(todoList[i].important === 0){
@@ -182,8 +185,7 @@ function flush() {
         console.log(text.innerHTML);
 
         const delButton = document.createElement("button");
-        //button.innerText = "X";
-        //button.innerHTML = "<svg t=\"1592107743494\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"2678\" width=\"20\" height=\"20\"><path d=\"M873.594739 873.716723a511.792629 511.792629 0 1 1 0-723.848188 511.792629 511.792629 0 0 1 0 723.848188z m-129.0826-543.313083a36.594954 36.594954 0 0 0-51.769662-51.720868l-181.120625 181.267005-181.145022-181.267005a36.594954 36.594954 0 0 0-51.745264 51.720868l181.120625 181.267005-181.120625 181.023039a36.594954 36.594954 0 0 0 51.745264 51.720868l181.145022-181.023038 181.120625 181.023038a36.594954 36.594954 0 0 0 51.769662-51.720868l-181.145022-181.023039z\" p-id=\"2679\" fill=\"#6b0fe4\"></path></svg>";
+        // 删除按钮
         delButton.innerHTML = "<svg t=\"1592108072628\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"3104\" width=\"20\" height=\"20\"><path d=\"M942.656 96.448 561.984 96.64 561.728 46.72c0-25.664-20.224-46.464-45.184-46.464-0.768 0-1.408 0.384-2.176 0.448-0.768 0-1.408-0.448-2.176-0.448-24.96 0-45.248 20.8-45.248 46.464L467.2 96.64 81.344 96.832c-25.024 0-45.248 20.864-45.248 46.464 0 25.664 20.224 46.4 45.248 46.4l48.768 0 0.32 692.16L130.56 881.856l0 49.152c0 51.008 40.448 92.288 90.432 92.288L266.24 1023.296l0 0.384 497.536-0.32 0-0.064 45.248 0c49.664 0 89.92-40.896 90.432-91.52L899.2 283.264c0-25.472-20.224-46.208-45.248-46.208-25.088 0-45.248 20.672-45.248 46.208l0.32 583.36c-4.8 53.696-26.56 64.448-89.28 64.448l1.152 0-421.696 0.256 11.008-0.256c-62.528 0-84.352-10.752-89.28-63.936L220.608 189.632l722.048-0.32c25.024 0 45.248-20.8 45.248-46.464S967.616 96.448 942.656 96.448z\" p-id=\"3105\" fill=\"#ffffff\"></path><path d=\"M401.28 232.512c-24.96 0-45.248 20.8-45.248 46.4l0.448 559.104c0 25.6 20.224 46.4 45.248 46.4 24.96 0 45.248-20.736 45.248-46.4L446.528 278.912C446.528 253.312 426.24 232.512 401.28 232.512z\" p-id=\"3106\" fill=\"#ffffff\"></path><path d=\"M627.456 232.512c-24.96 0-45.248 20.8-45.248 46.4l0.448 559.104c0 25.6 20.224 46.4 45.248 46.4s45.184-20.736 45.184-46.4l-0.384-559.104C672.704 253.312 652.416 232.512 627.456 232.512z\" p-id=\"3107\" fill=\"#ffffff\"></path></svg>";
         delButton.id = "delBtn";
         delButton.addEventListener("click", function () {
@@ -193,7 +195,7 @@ function flush() {
             prepareSync();
         });
 
-
+        //编辑按钮
         const editButton = document.createElement("button");
         editButton.innerHTML = "<svg t=\"1592109855118\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"1143\" width=\"20\" height=\"20\"><path d=\"M798.165333 97.834667a42.624 42.624 0 0 0-60.330666 0l-341.333334 341.333333a42.794667 42.794667 0 0 0-11.221333 19.797333l-42.666667 170.666667a42.666667 42.666667 0 0 0 51.712 51.754667l170.666667-42.666667c7.509333-1.877333 14.378667-5.76 19.84-11.221333l341.333333-341.333334a42.624 42.624 0 0 0 0-60.330666l-128-128z m-265.344 460.970666l-90.197333 22.528 22.570667-90.197333L768 188.330667 835.669333 256l-302.848 302.805333z\" fill=\"#ffffff\" p-id=\"1144\"></path><path d=\"M213.333333 853.333333h597.333334a42.666667 42.666667 0 0 0 42.666666-42.666666v-256h-85.333333v213.333333H256V256h213.333333V170.666667H213.333333a42.666667 42.666667 0 0 0-42.666666 42.666666v597.333334a42.666667 42.666667 0 0 0 42.666666 42.666666z\" fill=\"#ffffff\" p-id=\"1145\"></path></svg>";
         editButton.id = "editBtn";
@@ -212,6 +214,7 @@ function flush() {
         buttonGroup.appendChild(editButton);
         buttonGroup.appendChild(delButton);
 
+        // filter逻辑，如果不符合filter，那么这一个item不会被作为子节点渲染进html
         if (filter_complete && !todoList[i].completed) {
             todo.appendChild(item);
             continue;
@@ -220,7 +223,7 @@ function flush() {
             todo.appendChild(item);
             continue;
         }
-
+        // 搜索的filter，和前面一样
         if (filter_search) {
             var searchText = $('#searchBar').value;
             console.log(text.innerText);
@@ -230,19 +233,13 @@ function flush() {
                 continue;
             }
         }
-
-
+        // DOM链接子节点
         item.appendChild(checkbox);
         item.appendChild(icons);
         item.appendChild(text);
-        //item.appendChild(delButton);
-        //item.appendChild(editButton);
         item.appendChild(buttonGroup);
-
         todo.appendChild(item);
-        //input.value = null;
     }
-    //setFooterText();
 }
 
 
