@@ -35,7 +35,7 @@ function SyncServer() {
     //setTimeout(flushFromServer, 2000);
 }
 
-// 本地localStorage改动后触发此函数，当用户60秒之内无其他改动后，会同步到云端
+// 本地localStorage改动后触发此函数，当用户3秒之内无其他改动后，会同步到云端
 function prepareSync() {
     syncServer += 1;
     console.log(syncServer);
@@ -165,8 +165,21 @@ function flush() {
             judgeCompleteAndActive();
         });
 
+        const icons = document.createElement("p");
+        icons.className = "icons";
+        if(todoList[i].important === 0){
+            icons.innerHTML += "<svg t=\"1593148565403\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"2432\" width=\"16\" height=\"16\"><path d=\"M885.942179 427.687756l-267.445168-22.933315-104.470353-246.470461L409.553235 404.75444l-267.336698 22.933315 202.846918 175.770236-60.789505 261.34524 229.753731-138.569986 229.859132 138.569986-60.785411-261.34524L885.942179 427.687756zM514.026658 656.403854l-139.875724 84.425831 37.038568-159.160953-123.591853-106.975407 162.91751-14.053064 63.511499-150.116973 63.620993 150.116973 162.860205 14.053064-123.534548 106.975407 37.038568 159.160953L514.026658 656.403854z\" p-id=\"2433\" fill=\"#3366ff\"></path></svg>"
+        }
+        if(todoList[i].urgent === 0){
+            icons.innerHTML += "<svg t=\"1593148999170\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"1702\" width=\"16\" height=\"16\"><path d=\"M245.2 546.86c13.39 8.21 29.11 12.55 45.49 12.55h104.42l-47.88 312.77c-5.17 33.76 12.77 65.02 45.7 79.65 11.5 5.11 24.13 7.73 36.67 7.73 5.13 0 10.26-0.44 15.28-1.33 19.92-3.53 37.12-13.59 49.76-29.09L773.7 586.82c18.03-22.12 21.75-51.62 9.7-76.99-6.44-13.55-16.81-24.99-30-33.08-13.39-8.21-29.11-12.55-45.49-12.55H603.49l47.88-312.77c5.17-33.76-12.77-65.02-45.7-79.65-16.2-7.2-34.65-9.47-51.96-6.4-19.92 3.53-37.13 13.59-49.77 29.09L224.9 436.79c-18.03 22.12-21.75 51.62-9.71 76.99 6.44 13.55 16.82 24.99 30.01 33.08z m32.61-66.94L556.86 137.6c3.28-4.03 7.83-5.31 12.05-5.31 3.58 0 6.92 0.92 9.06 1.87 1.62 0.72 6.54 2.91 5.93 6.93l-52.4 342.32c-0.05 0.33-0.16 0.67-0.32 1.04a34.125 34.125 0 0 0 2.57 32.46 34.145 34.145 0 0 0 28.62 15.54h145.56c7.37 0 12.26 3.34 13.83 6.66 0.62 1.3 0.88 2.32-0.95 4.57L441.74 886c-6.07 7.44-16.46 5.5-21.11 3.44-1.62-0.72-6.54-2.91-5.93-6.93l52.4-342.32c0.05-0.33 0.16-0.67 0.32-1.05a34.125 34.125 0 0 0-31.19-47.99H290.69c-7.37 0-12.26-3.34-13.83-6.66-0.62-1.3-0.89-2.32 0.95-4.57z\" fill=\"#3366ff\" p-id=\"1703\"></path></svg>"
+        }
+
         const text = document.createElement("p");
-        text.innerText = todoList[i].text;
+        text.className = "todo-text";
+        console.log(todoList);
+
+        text.innerHTML += todoList[i].text;
+        console.log(text.innerHTML);
 
         const delButton = document.createElement("button");
         //button.innerText = "X";
@@ -191,9 +204,7 @@ function flush() {
             let editText = todo.childNodes[i];
             let thisText = todoList[i].text;
             editText.innerHTML = "<input type='text' value='" + thisText + "'> <button id='modifyOKBtn' onclick='modifyText(" + i + ")'><svg t=\"1592126891640\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"4231\" width=\"20\" height=\"20\"><path d=\"M860.048 375.018 522.717 712.35l-63.366 63.365c-8.387 8.387-20.035 13.045-31.684 13.045-11.647 0-23.296-4.658-31.683-13.045l-63.366-63.365L163.953 543.684c-8.387-8.387-13.047-20.035-13.047-31.683s4.66-23.296 13.047-31.683l63.365-63.366c8.387-8.387 20.035-13.046 31.684-13.046s23.296 4.659 31.683 13.046l136.982 137.447 305.648-306.113c8.387-8.387 20.035-13.046 31.683-13.046 11.648 0 23.297 4.659 31.684 13.046l63.366 63.366c8.387 8.387 13.046 20.035 13.046 31.683C873.094 354.983 868.435 366.631 860.048 375.018z\" p-id=\"4232\" fill=\"#ffffff\"></path></svg></button>"
-            //todoList.splice(i, 1);
-            //localStorage.setItem("todo", JSON.stringify(todoList));
-            //flush();
+
         });
 
         const buttonGroup = document.createElement("div");
@@ -219,7 +230,10 @@ function flush() {
                 continue;
             }
         }
+
+
         item.appendChild(checkbox);
+        item.appendChild(icons);
         item.appendChild(text);
         //item.appendChild(delButton);
         //item.appendChild(editButton);
