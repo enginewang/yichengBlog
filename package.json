@@ -22,7 +22,7 @@
     "markdown-it-vue": "^1.0.11",
     "marked": "^0.8.0",
     "node-sass": "^4.13.1",
-    "prismjs": "^1.19.0",
+    "prismjs": "^1.21.0",
     "qs": "latest",
     "sass-loader": "^8.0.2",
     "tilt.js": "^1.2.1",
