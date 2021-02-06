@@ -1,7 +1,10 @@
 <template>
-  <footer style="background-color: #2d2f33; height: 5em;">
-    <p style="color: white;margin-top: 1.7em;font-weight: bold">
-      Powered by yicheng.me
+  <footer style="background-color: #121212; height: 4.6em;">
+    <p style="color: white;margin-top: 1.2em;font-size: 14px;">
+      Copyright © 2018-2021 Powered by yichengme.site
+      <br/>
+      All Rights Reserved.<a href="http://beian.miit.gov.cn" style="color: #a0cfff; text-decoration: none">
+      沪ICP备2020038034号</a>
     </p>
     <!--
     <p style="color: white;margin-top: .5em;font-size: small">

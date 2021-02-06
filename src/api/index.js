@@ -5,7 +5,7 @@ import qs from 'qs'
 // 创建axios实例
 const service = axios.create({
   timeout: 100000,
-  baseURL: "https://yicheng.me/api",
+  baseURL: "https://yichengme.site/api",
   //baseURL: "http://localhost:1323/api",
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <img class="bg" src="../assets/bg.jpg">
-      <div class='welcome-text'>
+      <div class='welcome-text' style="height: 20vh; margin: 0">
       <!--
       <div v-anime="{ scaleX: 1.2, scaleY: 1.2, duration: 5000, translateY: -50,delay: 2000 }">
         <h2 class="welcome" style="color: rgba(255,255,255, 0);">Welcome to my blog</h2>
@@ -20,7 +19,7 @@
       <g id="Layer_2" data-name="Layer 2">
         <g id="Lines" data-name="Layer 1">
           <text class="cls-1" transform="translate(1 261.19) scale(0.99 1)">Y</text>
-          <text class="cls-2" transform="translate(97 262.09) scale(1.02 1)">i</text>
+          <text class="cls-2" transform="translate(92 262.09) scale(1.02 1)">i</text>
           <text class="cls-1" transform="translate(419 262.19) scale(0.99 1)">g</text>
           <text class="cls-1" transform="translate(342 261.19) scale(0.99 1)">n</text>
           <text class="cls-1" transform="translate(268 262.19) scale(0.99 1)">e</text>
@@ -30,17 +29,29 @@
           <text class="cls-3" transform="translate(704 261.28) scale(1.01 1)">l</text>
           <text class="cls-1" transform="translate(724 261.19) scale(0.99 1)">o</text>
           <text class="cls-1" transform="translate(806 260.19) scale(0.99 1)">g</text>
-          <text class="cls-1" transform="translate(512 261.19) scale(0.99 1)">s</text>
-          <text class="cls-1" transform="matrix(-0.98, -0.1, 0.11, -0.99, 566, 53.63)">‘</text>
+<!--          <text class="cls-1" transform="translate(512 261.19) scale(0.99 1)">s</text>-->
+<!--          <text class="cls-1" transform="matrix(-0.98, -0.1, 0.11, -0.99, 566, 53.63)">‘</text>-->
         </g>
       </g>
     </svg>
+<!--    <footer style="height: 5em; z-index: 2000; width: 100%; height: 10vh; margin-top:90vh">-->
+<!--      <p style="color: white;margin-top: 1.2em;z-index: 2000;padding-top: 1rem">-->
+<!--        Copyright © 2018-2021 Powered by yichengme.site-->
+<!--        <br/>-->
+<!--        All Rights Reserved.<a href="https://beian.miit.gov.cn" style="color: white;z-index: 300; text-decoration: none">-->
+<!--        沪ICP备2020038034号</a>-->
+<!--      </p>-->
+<!--    </footer>-->
+    <my-footer style="z-index: 100000; position: absolute; bottom: 0; background-color: #030406"></my-footer>
+    <img class="bg" src="../assets/bg.jpg">
   </div>
 </template>
 
 <script>
+  import MyFooter from "../components/myFooter";
   export default {
     name: 'Home',
+    components: {MyFooter},
     methods: {
       blogPage() {
         this.$router.push("article");
@@ -74,11 +85,12 @@
     left: 0;
     object-fit: cover;
     opacity: 0.5;
-    height: 100%;
+    height: 90vh;
     width: auto \9;
     width: 100%;
     z-index: 0;
-    position: absolute;
+    position: fixed;
+    top: 0;
   }
 
   .welcome-text {
@@ -100,7 +112,7 @@
     stroke-miterlimit: 10;
     stroke-width: 2px;
     stroke-dasharray: 550;
-    animation: dash 4s ease-in-out, fill 3s ease-in-out 4s, fill2 2s ease-in-out 6s, dash2 3s ease-in-out 8s, dash3 3s ease-in-out 11s forwards;
+    animation: dash 4s ease-in-out, fill 3s ease-in-out 4s, fill2 2s ease-in-out 6s, dash2 3s ease-in-out 8s, dash3 3s ease-in-out 11s, fill 3s ease-in-out 4s forwards;
   }
 
   @keyframes dash {
@@ -153,21 +165,11 @@
   }
 
 
-  .cls-1 {
-    font-size: 169.95px;
-  }
-
-  .cls-1, .cls-3 {
-    font-family: SFUIText-Regular, SF UI Text;
-  }
-
-  .cls-2 {
-    font-size: 165.21px;
-    font-family: Tahoma;
-  }
-
-  .cls-3 {
-    font-size: 166.05px;
+  .cls-1, .cls-2, .cls-3 {
+    font-size: 140px;
+    font-family: "DongQingHeiTi", "Microsoft YaHei", "PingFang SC";
+    margin-left: 12px;
+    /*font-family: SFUIText-Regular, SF UI Text;*/
   }
 
   svg {

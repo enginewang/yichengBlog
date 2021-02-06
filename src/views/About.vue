@@ -8,7 +8,7 @@
             <div slot="header" class="clearfix">
               <el-row>
                 <el-button class="backBtn" @click="prePage" style="position: absolute;left: 1em;"> 返回</el-button>
-                <h2>关于</h2>
+                <p style="font-weight: bold; font-size: x-large; text-align: center; margin-block-start: 0; margin-block-end: 0">关于</p>
               </el-row>
             </div>
             <div class="content" style="text-align: left">
@@ -16,7 +16,7 @@
               <br>
               <h4>为什么有这个网站？</h4>
               <p>在平常的学习生活中，我总想找个地方记录一些心得感悟，搭建一个博客网站无疑是一个不错的选择。一开始选择的是比较省事的GitHub
-                Page，后来用Django撸一个站点，运行了大概一年后觉得Django可自定义化不是很强，数据库方面用的不爽，最后决定采用前后端分离的方式，用Golang重新构建了这个网站，前端用的Vue.js和Element
+                Page，后来用Django撸一个站点，运行了大概一年后觉得Django可自定义化不是很强，数据库方面用的不爽，最后决定采用前后端分离的方式，重新构建了这个网站，后端用的Golang，前端用的Vue.js和Element
                 UI，因为没有套模板，有些地方尤其是自适应方面可能会有些奇怪。
                 如果遇到了问题希望能邮箱联系我，非常感谢！
               </p>

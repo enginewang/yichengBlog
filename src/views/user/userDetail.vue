@@ -9,7 +9,7 @@
           <el-upload
                   class="upload-box"
                   drag
-                  action="https://yicheng.me/api/upload"
+                  action="https://yichengme.site/api/upload"
                   :on-success="handleAvatarSuccess"
                   multiple>
             <i class="el-icon-upload"></i>
@@ -194,7 +194,7 @@
       },
       handleAvatarSuccess(response, file, fileList) {
         this.hasUpload = true;
-        this.newAvatarUrl = "https://yicheng.me/image/" + response;
+        this.newAvatarUrl = "https://yichengme.site/image/" + response;
       },
       updateUserInfo() {
         let username = this.userInfo.username;

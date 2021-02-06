@@ -2,7 +2,7 @@
   <div class="upload-container">
     <el-upload
             drag
-            action="https://yicheng.me/api/upload"
+            action="https://yichengme.site/api/upload"
             :on-success="handleAvatarSuccess"
             multiple>
       <i class="el-icon-upload"></i>
@@ -30,7 +30,7 @@
     methods: {
       handleAvatarSuccess(response, file, fileList) {
         this.hasUpload = true;
-        this.fileUrl = "https://yicheng.me/image/" + response;
+        this.fileUrl = "https://yichengme.site/image/" + response;
         console.log(this.fileUrl)
         this.$emit('returnUrl', this.fileUrl)
       },
