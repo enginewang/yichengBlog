@@ -1,9 +1,9 @@
 <template>
-  <footer style="background-color: #121212; height: 4.6em;">
+  <footer style="background-color: #121212; height: 70px;">
     <p style="color: white;margin-top: 1.2em;font-size: 14px;">
       Copyright © 2018-2021 Powered by yichengme.site
       <br/>
-      All Rights Reserved.<a href="http://beian.miit.gov.cn" style="color: #a0cfff; text-decoration: none">
+      All Rights Reserved.<a href="http://beian.miit.gov.cn" style="color: #dddddd; text-decoration: none">
       沪ICP备2020038034号</a>
     </p>
     <!--
@@ -14,16 +14,16 @@
 </template>
 
 <script>
-  export default {
-    name: "myFooter"
-  }
+export default {
+  name: 'myFooter'
+}
 </script>
 
 <style scoped>
-  footer {
-    padding: 0;
-    bottom: 0;
-    width: 100%;
-    position: relative;
-  }
+footer {
+  padding: 0;
+  bottom: 0;
+  width: 100%;
+  position: relative;
+}
 </style>

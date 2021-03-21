@@ -6,7 +6,7 @@
 
 <style>
 #app {
-  font-family: "DongQingHeiTi", "Microsoft YaHei", "WenQuanYi Micro Hei", "微软雅黑", 'HanHei SC', Helvetica, Tahoma, Arial, "Hiragino Sans GB", 'PingFang SC', sans-serif;
+  font-family: "Microsoft YaHei", "WenQuanYi Micro Hei", "微软雅黑", 'HanHei SC', Helvetica, Tahoma, Arial, "Hiragino Sans GB", 'PingFang SC', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -25,10 +25,5 @@
 @font-face {
   font-family: 'RuiZiLongShu';
   src: url('../public/fonts/RuiZiLongShu.ttf');
-}
-
-@font-face {
-  font-family: 'DongQingHeiTi';
-  src: url('../public/fonts/DongQingHeiTi-1.otf');
 }
 </style>
